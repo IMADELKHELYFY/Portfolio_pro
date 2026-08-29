@@ -2,26 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
+  /* Thème clair — neutre, accent vert terminal assombri pour le contraste */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --surface: 0 0% 97%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 150 62% 27%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 12%;
+    --destructive: 0 65% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 150 62% 32%;
+    --grid-line: 0 0% 0%;
+    --grid-opacity: 0.055;
+  }
+
+  /* Thème sombre — le défaut : esthétique dashboard */
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
+    --surface: 0 0% 7%;
+    --card: 0 0% 6.5%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 148 66% 47%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 88%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 0 0% 57%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 62% 47%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 18%;
+    --ring: 148 66% 47%;
+    --grid-line: 0 0% 100%;
+    --grid-opacity: 0.06;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    @apply bg-primary/25;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  /* Fond dot-grid discret — rappel notebook / graphique */
+  .bg-dot-grid {
+    background-image: radial-gradient(
+      hsl(var(--grid-line) / var(--grid-opacity)) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+    background-position: -1px -1px;
   }
+
+  /* Fond quadrillé pour les bandeaux de carte */
+  .bg-line-grid {
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--grid-line) / var(--grid-opacity)) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        hsl(var(--grid-line) / var(--grid-opacity)) 1px,
+        transparent 1px
+      );
+    background-size: 16px 16px;
+  }
+
+  /* Libellé technique : monospace, capitales, interlettrage */
+  .label-mono {
+    @apply font-mono text-2xs uppercase tracking-[0.14em] text-muted-foreground;
+  }
+
+  .terminal-caret::after {
+    content: "_";
+    @apply ml-0.5 animate-blink text-primary;
+  }
+}
+
+/* Rendu markdown du contenu projet */
+.prose-data {
+  @apply prose prose-neutral max-w-none dark:prose-invert;
+  @apply prose-headings:font-mono prose-headings:tracking-tight;
+  @apply prose-a:text-primary prose-a:underline-offset-4;
+  @apply prose-code:rounded-sm prose-code:border prose-code:border-border prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-[0.85em] prose-code:before:content-none prose-code:after:content-none;
+  @apply prose-pre:rounded-md prose-pre:border prose-pre:border-border prose-pre:bg-surface;
+  @apply prose-th:font-mono prose-th:text-2xs prose-th:uppercase prose-th:tracking-wider;
 }
