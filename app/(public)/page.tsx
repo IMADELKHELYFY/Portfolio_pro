@@ -1,14 +1,26 @@
 import Link from "next/link";
 
+import { OfflineBanner } from "@/components/offline-banner";
 import { ProjectCard, type ProjectCardData } from "@/components/project-card";
 import { StatCard } from "@/components/stat-card";
 import { prisma } from "@/lib/prisma";
+import { previewCategories, previewProjects, withFallback } from "@/lib/preview";
 import { cn, formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 type HomePageProps = {
   searchParams: { category?: string };
+};
+
+type CategoryFilter = { id: string; name: string; slug: string; projectCount: number };
+
+type HomeData = {
+  categories: CategoryFilter[];
+  cards: ProjectCardData[];
+  topStack: string;
+  lastUpdated: Date | null;
+  totalProjects: number;
 };
 
 /** Trois technologies les plus fréquentes dans l'ensemble des projets. */
@@ -27,11 +39,7 @@ function topTechStack(stacks: string[][]): string {
   return top.length > 0 ? top.join(" / ") : "—";
 }
 
-export default async function HomePage({
-  searchParams,
-}: HomePageProps): Promise<JSX.Element> {
-  const activeCategory = searchParams.category;
-
+async function loadFromDatabase(activeCategory?: string): Promise<HomeData> {
   const [categories, projects, allStacks, lastUpdated, totalProjects] =
     await Promise.all([
       prisma.category.findMany({
@@ -55,21 +63,69 @@ export default async function HomePage({
       prisma.project.count(),
     ]);
 
-  const cards: ProjectCardData[] = projects.map((project) => ({
-    slug: project.slug,
-    title: project.title,
-    description: project.description,
-    techStack: project.techStack,
-    featured: project.featured,
-    category: project.category,
-    cover: project.images[0]
-      ? { url: project.images[0].url, alt: project.images[0].alt }
-      : null,
-    commentCount: project._count.comments,
-  }));
+  return {
+    categories: categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      projectCount: category._count.projects,
+    })),
+    cards: projects.map((project) => ({
+      slug: project.slug,
+      title: project.title,
+      description: project.description,
+      techStack: project.techStack,
+      featured: project.featured,
+      category: project.category,
+      cover: project.images[0]
+        ? { url: project.images[0].url, alt: project.images[0].alt }
+        : null,
+      commentCount: project._count.comments,
+    })),
+    topStack: topTechStack(allStacks.map((project) => project.techStack)),
+    lastUpdated: lastUpdated?.updatedAt ?? null,
+    totalProjects,
+  };
+}
+
+/** Jeu de démonstration servi quand la base n'est pas joignable. */
+function previewData(activeCategory?: string): HomeData {
+  const filtered = activeCategory
+    ? previewProjects.filter((project) => project.category.slug === activeCategory)
+    : previewProjects;
+
+  return {
+    categories: previewCategories,
+    cards: filtered.map((project) => ({
+      slug: project.slug,
+      title: project.title,
+      description: project.description,
+      techStack: project.techStack,
+      featured: project.featured,
+      category: project.category,
+      cover: null,
+      commentCount: project.commentCount,
+    })),
+    topStack: topTechStack(previewProjects.map((project) => project.techStack)),
+    lastUpdated: previewProjects[0].updatedAt,
+    totalProjects: previewProjects.length,
+  };
+}
+
+export default async function HomePage({
+  searchParams,
+}: HomePageProps): Promise<JSX.Element> {
+  const activeCategory = searchParams.category;
+
+  const { data, offline } = await withFallback(
+    () => loadFromDatabase(activeCategory),
+    previewData(activeCategory),
+  );
 
   return (
     <>
+      {offline ? <OfflineBanner /> : null}
+
       {/* Hero : identité data, métriques calculées depuis la base */}
       <section className="border-b border-border bg-dot-grid">
         <div className="container py-14 sm:py-20">
@@ -85,16 +141,20 @@ export default async function HomePage({
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <StatCard label="Projets publiés" value={String(totalProjects)} accent />
-            <StatCard label="Catégories" value={String(categories.length)} />
+            <StatCard
+              label="Projets publiés"
+              value={String(data.totalProjects)}
+              accent
+            />
+            <StatCard label="Catégories" value={String(data.categories.length)} />
             <StatCard
               label="Stack principale"
-              value={topTechStack(allStacks.map((project) => project.techStack))}
+              value={data.topStack}
               className="col-span-2 lg:col-span-1"
             />
             <StatCard
               label="Dernière mise à jour"
-              value={lastUpdated ? formatDate(lastUpdated.updatedAt) : "—"}
+              value={data.lastUpdated ? formatDate(data.lastUpdated) : "—"}
             />
           </div>
         </div>
@@ -113,9 +173,9 @@ export default async function HomePage({
                 : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground",
             )}
           >
-            tous ({totalProjects})
+            tous ({data.totalProjects})
           </Link>
-          {categories.map((category) => (
+          {data.categories.map((category) => (
             <Link
               key={category.id}
               href={`/?category=${category.slug}`}
@@ -126,19 +186,19 @@ export default async function HomePage({
                   : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground",
               )}
             >
-              {category.name} ({category._count.projects})
+              {category.name} ({category.projectCount})
             </Link>
           ))}
         </div>
 
         <div className="mt-6">
-          {cards.length === 0 ? (
+          {data.cards.length === 0 ? (
             <p className="rounded-md border border-dashed border-border px-4 py-16 text-center text-sm text-muted-foreground">
               Aucun projet dans cette catégorie.
             </p>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {cards.map((project) => (
+              {data.cards.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}
             </div>

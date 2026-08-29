@@ -3,57 +3,128 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { CommentSection } from "@/components/comment-section";
+import { CommentSection, type PublicComment } from "@/components/comment-section";
 import { Markdown } from "@/components/markdown";
+import { OfflineBanner } from "@/components/offline-banner";
 import { ProjectCarousel } from "@/components/project-carousel";
 import { StatCard } from "@/components/stat-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { parseMetrics } from "@/lib/metrics";
+import { parseMetrics, type Metric } from "@/lib/metrics";
 import { prisma } from "@/lib/prisma";
+import { previewComments, previewProjects, withFallback } from "@/lib/preview";
 import { formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 type ProjectPageProps = { params: { slug: string } };
 
-async function getProject(slug: string) {
-  return prisma.project.findUnique({
+type ProjectView = {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  techStack: string[];
+  liveUrl: string | null;
+  repoUrl: string | null;
+  updatedAt: Date;
+  category: { name: string; slug: string };
+  metrics: Metric[];
+  images: { url: string; alt: string | null }[];
+  files: { id: string; url: string; filename: string }[];
+  comments: PublicComment[];
+};
+
+async function loadFromDatabase(slug: string): Promise<ProjectView | null> {
+  const project = await prisma.project.findUnique({
     where: { slug },
     include: {
       category: true,
       images: { orderBy: { order: "asc" } },
       files: true,
-      comments: {
-        where: { approved: true },
-        orderBy: { createdAt: "desc" },
-      },
+      comments: { where: { approved: true }, orderBy: { createdAt: "desc" } },
     },
   });
+
+  if (!project) return null;
+
+  return {
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    content: project.content,
+    techStack: project.techStack,
+    liveUrl: project.liveUrl,
+    repoUrl: project.repoUrl,
+    updatedAt: project.updatedAt,
+    category: { name: project.category.name, slug: project.category.slug },
+    metrics: parseMetrics(project.metrics),
+    images: project.images.map((image) => ({ url: image.url, alt: image.alt })),
+    files: project.files.map((file) => ({
+      id: file.id,
+      url: file.url,
+      filename: file.filename,
+    })),
+    comments: project.comments.map((comment) => ({
+      id: comment.id,
+      authorName: comment.authorName,
+      content: comment.content,
+      createdAt: comment.createdAt,
+    })),
+  };
+}
+
+/** Jeu de démonstration servi quand la base n'est pas joignable. */
+function previewView(slug: string): ProjectView | null {
+  const project = previewProjects.find((item) => item.slug === slug);
+  if (!project) return null;
+
+  return {
+    id: `preview-${project.slug}`,
+    title: project.title,
+    description: project.description,
+    content: project.content,
+    techStack: project.techStack,
+    liveUrl: project.liveUrl,
+    repoUrl: project.repoUrl,
+    updatedAt: project.updatedAt,
+    category: project.category,
+    metrics: Object.entries(project.metrics).map(([label, value]) => ({
+      label,
+      value,
+    })),
+    images: [],
+    files: [],
+    comments: project.commentCount > 0 ? previewComments : [],
+  };
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = await prisma.project.findUnique({
-    where: { slug: params.slug },
-    select: { title: true, description: true },
-  });
+  const { data } = await withFallback(
+    () => loadFromDatabase(params.slug),
+    previewView(params.slug),
+  );
 
-  if (!project) return { title: "Projet introuvable" };
-  return { title: project.title, description: project.description };
+  if (!data) return { title: "Projet introuvable" };
+  return { title: data.title, description: data.description };
 }
 
 export default async function ProjectPage({
   params,
 }: ProjectPageProps): Promise<JSX.Element> {
-  const project = await getProject(params.slug);
-  if (!project) notFound();
+  const { data: project, offline } = await withFallback(
+    () => loadFromDatabase(params.slug),
+    previewView(params.slug),
+  );
 
-  const metrics = parseMetrics(project.metrics);
+  if (!project) notFound();
 
   return (
     <>
+      {offline ? <OfflineBanner /> : null}
+
       <section className="border-b border-border bg-dot-grid">
         <div className="container py-10">
           <Link
@@ -103,9 +174,9 @@ export default async function ProjectPage({
 
       <div className="container grid gap-10 py-10 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="flex min-w-0 flex-col gap-10">
-          {metrics.length > 0 ? (
+          {project.metrics.length > 0 ? (
             <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {metrics.map((metric) => (
+              {project.metrics.map((metric) => (
                 <StatCard
                   key={metric.label}
                   label={metric.label}
@@ -117,27 +188,14 @@ export default async function ProjectPage({
           ) : null}
 
           {project.images.length > 0 ? (
-            <ProjectCarousel
-              images={project.images.map((image) => ({
-                url: image.url,
-                alt: image.alt,
-              }))}
-            />
+            <ProjectCarousel images={project.images} />
           ) : null}
 
           <article className="prose-data">
             <Markdown content={project.content} />
           </article>
 
-          <CommentSection
-            projectId={project.id}
-            comments={project.comments.map((comment) => ({
-              id: comment.id,
-              authorName: comment.authorName,
-              content: comment.content,
-              createdAt: comment.createdAt,
-            }))}
-          />
+          <CommentSection projectId={project.id} comments={project.comments} />
         </div>
 
         <aside className="flex h-fit flex-col gap-3 lg:sticky lg:top-20">

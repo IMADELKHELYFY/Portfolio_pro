@@ -4,6 +4,7 @@ import { StatCard } from "@/components/stat-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
+import { previewProjects, withFallback } from "@/lib/preview";
 
 export const metadata = {
   title: "À propos",
@@ -45,11 +46,16 @@ const profile = {
 } as const;
 
 export default async function AboutPage(): Promise<JSX.Element> {
-  const [projectCount, categoryCount, commentCount] = await Promise.all([
-    prisma.project.count(),
-    prisma.category.count(),
-    prisma.comment.count({ where: { approved: true } }),
-  ]);
+  const { data } = await withFallback(
+    async () =>
+      Promise.all([
+        prisma.project.count(),
+        prisma.category.count(),
+        prisma.comment.count({ where: { approved: true } }),
+      ]),
+    [previewProjects.length, 4, 3] as [number, number, number],
+  );
+  const [projectCount, categoryCount, commentCount] = data;
 
   return (
     <>
