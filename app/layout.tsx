@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { profile } from "@/lib/profile";
 
 import "./globals.css";
 
@@ -20,8 +21,8 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Portfolio — Data",
-    template: "%s — Portfolio Data",
+    default: `${profile.name} — ${profile.role}`,
+    template: `%s — ${profile.name}`,
   },
   description:
     "Portfolio de projets data : analyse, ingénierie et visualisation de données.",

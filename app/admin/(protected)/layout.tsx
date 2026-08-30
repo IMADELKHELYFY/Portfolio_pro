@@ -1,6 +1,9 @@
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { extractRouterConfig } from "uploadthing/server";
 
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { AdminNav } from "@/components/admin/admin-nav";
 import { SignOutButton } from "@/components/admin/sign-out-button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -15,6 +18,10 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Config des routes d'upload injectée au rendu : évite un GET
+          /api/uploadthing au montage de chaque page admin. */}
+      <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="container flex h-14 items-center justify-between gap-4">
           <div className="flex items-center gap-5">
