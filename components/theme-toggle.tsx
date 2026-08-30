@@ -16,11 +16,19 @@ export function ThemeToggle(): JSX.Element {
 
   const isDark = resolvedTheme === "dark";
 
+  // Avant le montage, le thème résolu est inconnu côté serveur : on rend un
+  // libellé neutre pour éviter une différence d'hydratation.
+  const label = !mounted
+    ? "Changer de thème"
+    : isDark
+      ? "Passer en thème clair"
+      : "Passer en thème sombre";
+
   return (
     <Button
       variant="ghost"
       size="icon"
-      aria-label={isDark ? "Passer en thème clair" : "Passer en thème sombre"}
+      aria-label={label}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
       {mounted && !isDark ? (

@@ -1,12 +1,16 @@
 // Prisma schema — portfolio data-oriented
-// docs: https://pris.ly/d/prisma-schema
+//
+// Provider SQLite pour le développement local (fichier prisma/dev.db).
+// Pour déployer sur Vercel/Neon : remplacer provider par "postgresql" et
+// DATABASE_URL par la chaîne Postgres — le reste du schéma est compatible
+// avec les deux moteurs (techStack et metrics sont du JSON sérialisé).
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -22,13 +26,14 @@ model Project {
   title       String
   slug        String         @unique
   description String
-  content     String         @db.Text
-  techStack   String[]
+  content     String
+  /// Tableau JSON sérialisé : ["Python","dbt"] — SQLite n'a pas de liste scalaire
+  techStack   String         @default("[]")
   liveUrl     String?
   repoUrl     String?
   featured    Boolean        @default(false)
-  /// Métriques libres affichées en tête de page projet : { "label": "valeur" }
-  metrics     Json?
+  /// Objet JSON sérialisé : {"Volume / jour":"4,2 M lignes"}
+  metrics     String?
   category    Category       @relation(fields: [categoryId], references: [id])
   categoryId  String
   images      ProjectImage[]

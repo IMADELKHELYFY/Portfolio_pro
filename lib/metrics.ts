@@ -1,15 +1,10 @@
-import type { Prisma } from "@prisma/client";
+import { parseStringRecord } from "@/lib/serialize";
 
 export type Metric = { label: string; value: string };
 
-/** Normalise le champ Json `metrics` en liste ordonnée { label, value }. */
-export function parseMetrics(value: Prisma.JsonValue | null): Metric[] {
-  if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return [];
-  }
-
-  return Object.entries(value)
-    .filter(([, raw]) => raw !== null && raw !== undefined)
-    .map(([label, raw]) => ({ label, value: String(raw) }))
+/** Normalise le champ `metrics` (JSON sérialisé) en liste { label, value }. */
+export function parseMetrics(raw: string | null): Metric[] {
+  return Object.entries(parseStringRecord(raw))
+    .map(([label, value]) => ({ label, value }))
     .slice(0, 6);
 }

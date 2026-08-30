@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { errorState, successState, toFieldErrors, type ActionState } from "@/lib/form";
 import { prisma } from "@/lib/prisma";
+import { stringifyStringArray, stringifyStringRecord } from "@/lib/serialize";
 import { slugify } from "@/lib/utils";
 import { projectSchema } from "@/lib/validations";
 
@@ -31,11 +32,14 @@ async function uniqueSlug(base: string, excludeId?: string): Promise<string> {
   }
 }
 
-function metricsToJson(
+/** Sérialise les métriques en JSON ; null si aucune métrique. */
+function metricsToString(
   metrics: { label: string; value: string }[],
-): Record<string, string> | null {
+): string | null {
   if (metrics.length === 0) return null;
-  return Object.fromEntries(metrics.map((m) => [m.label, m.value]));
+  return stringifyStringRecord(
+    Object.fromEntries(metrics.map((m) => [m.label, m.value])),
+  );
 }
 
 export async function createProject(input: unknown): Promise<ActionState> {
@@ -66,11 +70,11 @@ export async function createProject(input: unknown): Promise<ActionState> {
         slug,
         description: data.description,
         content: data.content,
-        techStack: data.techStack,
+        techStack: stringifyStringArray(data.techStack),
         liveUrl: data.liveUrl,
         repoUrl: data.repoUrl,
         featured: data.featured,
-        metrics: metricsToJson(data.metrics) ?? undefined,
+        metrics: metricsToString(data.metrics),
         categoryId: data.categoryId,
         images: { create: data.images },
         files: { create: data.files },
@@ -116,11 +120,11 @@ export async function updateProject(
           slug,
           description: data.description,
           content: data.content,
-          techStack: data.techStack,
+          techStack: stringifyStringArray(data.techStack),
           liveUrl: data.liveUrl,
           repoUrl: data.repoUrl,
           featured: data.featured,
-          metrics: metricsToJson(data.metrics) ?? undefined,
+          metrics: metricsToString(data.metrics),
           categoryId: data.categoryId,
           images: { create: data.images },
           files: { create: data.files },

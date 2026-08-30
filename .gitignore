@@ -38,3 +38,7 @@ next-env.d.ts
 # secrets locaux
 .env
 !.env.example
+
+# base SQLite locale
+prisma/*.db
+prisma/*.db-journal

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ProjectForm } from "@/components/admin/project-form";
 import { parseMetrics } from "@/lib/metrics";
 import { prisma } from "@/lib/prisma";
+import { parseStringArray } from "@/lib/serialize";
 
 export const metadata = { title: "Modifier un projet" };
 export const dynamic = "force-dynamic";
@@ -57,7 +58,7 @@ export default async function EditProjectPage({
           slug: project.slug,
           description: project.description,
           content: project.content,
-          techStack: project.techStack,
+          techStack: parseStringArray(project.techStack),
           liveUrl: project.liveUrl ?? "",
           repoUrl: project.repoUrl ?? "",
           featured: project.featured,

@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+/** techStack et metrics sont stockés en JSON sérialisé (compatible SQLite). */
+const json = (value: unknown): string => JSON.stringify(value);
+
 async function main(): Promise<void> {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
@@ -39,18 +42,19 @@ async function main(): Promise<void> {
   }
   console.log(`✓ ${categories.length} catégories`);
 
-  // --- Projets de démonstration ---
-  const engineering = await prisma.category.findUniqueOrThrow({
-    where: { slug: "data-engineering" },
-  });
-  const analysis = await prisma.category.findUniqueOrThrow({
-    where: { slug: "data-analysis" },
-  });
+  const bySlug = async (slug: string): Promise<string> =>
+    (await prisma.category.findUniqueOrThrow({ where: { slug } })).id;
 
-  const pipeline = await prisma.project.upsert({
-    where: { slug: "pipeline-etl-ventes" },
-    update: {},
-    create: {
+  const [engineering, analysis, ml, dataviz] = await Promise.all([
+    bySlug("data-engineering"),
+    bySlug("data-analysis"),
+    bySlug("machine-learning"),
+    bySlug("dataviz"),
+  ]);
+
+  // --- Projets de démonstration ---
+  const projects = [
+    {
       title: "Pipeline ETL ventes",
       slug: "pipeline-etl-ventes",
       description:
@@ -72,23 +76,18 @@ async function main(): Promise<void> {
         "",
         "Le rapport hebdomadaire est passé de 4 h de retraitement manuel à une exécution automatique de 9 minutes.",
       ].join("\n"),
-      techStack: ["Python", "Airflow", "dbt", "PostgreSQL", "Docker"],
+      techStack: json(["Python", "Airflow", "dbt", "PostgreSQL", "Docker"]),
       repoUrl: "https://github.com/",
       featured: true,
-      metrics: {
+      metrics: json({
         "Sources ingérées": "12",
         "Volume / jour": "4,2 M lignes",
         "Temps de run": "9 min",
         "Couverture tests": "87 %",
-      },
-      categoryId: engineering.id,
+      }),
+      categoryId: engineering,
     },
-  });
-
-  const churn = await prisma.project.upsert({
-    where: { slug: "analyse-churn-abonnes" },
-    update: {},
-    create: {
+    {
       title: "Analyse du churn abonnés",
       slug: "analyse-churn-abonnes",
       description:
@@ -112,22 +111,91 @@ async function main(): Promise<void> {
         "| Aucun usage de la fonctionnalité clé | fort |",
         "| Ticket support non résolu | moyen |",
       ].join("\n"),
-      techStack: ["Python", "pandas", "scikit-learn", "SQL", "Power BI"],
+      techStack: json(["Python", "pandas", "scikit-learn", "SQL", "Power BI"]),
+      repoUrl: null,
       featured: true,
-      metrics: {
+      metrics: json({
         "Abonnés analysés": "45 000",
         "Churn initial": "6,4 %",
         "AUC modèle": "0,81",
-      },
-      categoryId: analysis.id,
+      }),
+      categoryId: analysis,
     },
-  });
+    {
+      title: "Détection d'anomalies capteurs",
+      slug: "detection-anomalies-capteurs",
+      description:
+        "Modèle non supervisé qui isole les dérives de 340 capteurs industriels avant la panne.",
+      content: [
+        "## Objectif",
+        "",
+        "Anticiper la panne plutôt que la constater.",
+        "",
+        "## Approche",
+        "",
+        "- Fenêtres glissantes sur les séries temporelles",
+        "- Isolation Forest puis seuillage par capteur",
+        "- Alerte poussée dans le canal de maintenance",
+        "",
+        "## Limite connue",
+        "",
+        "Le modèle reste aveugle aux pannes brutales sans signal précurseur.",
+      ].join("\n"),
+      techStack: json(["Python", "scikit-learn", "Kafka", "Grafana"]),
+      repoUrl: null,
+      featured: false,
+      metrics: json({
+        "Capteurs suivis": "340",
+        "Préavis moyen": "36 h",
+        "Faux positifs": "4 %",
+      }),
+      categoryId: ml,
+    },
+    {
+      title: "Dashboard logistique temps réel",
+      slug: "dashboard-logistique",
+      description:
+        "Suivi des expéditions de 6 entrepôts, du taux de service et des retards par transporteur.",
+      content: [
+        "## Besoin",
+        "",
+        "Les équipes terrain n'avaient aucune vision consolidée.",
+        "",
+        "## Livrable",
+        "",
+        "Un dashboard rafraîchi toutes les 15 minutes, une page par entrepôt,",
+        "et une vue direction avec les trois indicateurs qui comptent.",
+      ].join("\n"),
+      techStack: json(["Power BI", "SQL", "DAX"]),
+      repoUrl: null,
+      featured: false,
+      metrics: json({
+        Entrepôts: "6",
+        "Taux de service": "94,8 %",
+        Rafraîchissement: "15 min",
+      }),
+      categoryId: dataviz,
+    },
+  ];
 
-  console.log("✓ 2 projets de démonstration");
+  for (const project of projects) {
+    await prisma.project.upsert({
+      where: { slug: project.slug },
+      update: {},
+      create: project,
+    });
+  }
+  console.log(`✓ ${projects.length} projets de démonstration`);
 
   // --- Commentaires : un approuvé, un en attente de modération ---
-  const existingComments = await prisma.comment.count();
-  if (existingComments === 0) {
+  if ((await prisma.comment.count()) === 0) {
+    const pipeline = await prisma.project.findUniqueOrThrow({
+      where: { slug: "pipeline-etl-ventes" },
+    });
+    const churn = await prisma.project.findUniqueOrThrow({
+      where: { slug: "analyse-churn-abonnes" },
+    });
+
     await prisma.comment.createMany({
       data: [
         {
@@ -137,7 +205,8 @@ async function main(): Promise<void> {
           projectId: pipeline.id,
         },
         {
-          content: "Quelle taille de fenêtre as-tu retenue pour l'analyse de survie ?",
+          content:
+            "Quelle taille de fenêtre as-tu retenue pour l'analyse de survie ?",
           authorName: "Yanis",
           approved: false,
           projectId: churn.id,
