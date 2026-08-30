@@ -1,0 +1,516 @@
+/* ===========================================================================
+   Portfolio — Imad EL KHELYFY
+   CSS pur (aucune directive Tailwind ici : le CDN Tailwind ne traite pas les
+   fichiers externes). Tailwind gère la mise en page dans le HTML ; ce fichier
+   gère les motifs de fond, les animations et les composants réutilisés.
+
+   Palette
+     fond        #08080A   surface #0C0C10   carte #1A1A22
+     bordure     #26262F
+     violet      #A99BFF (clair) · #8B7CFF · #7C5CFF · #5B3DF5 (foncé)
+     texte       #E4E4E7 (fort) · #A1A1AA · #71717A · #52525B (faible)
+   =========================================================================== */
+
+/* --- Motifs de fond -------------------------------------------------------- */
+
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-line-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* --- Navigation ------------------------------------------------------------ */
+
+.nav-link {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #71717A;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.nav-link.is-current {
+  background: rgba(124, 92, 255, 0.12);
+  color: #A99BFF;
+}
+
+/* --- Titres de section ----------------------------------------------------- */
+
+.section-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #8B7CFF;
+}
+
+/* --- Petits composants ----------------------------------------------------- */
+
+.chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #26262F;
+  border-radius: 4px;
+  background: #1A1A22;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: #A1A1AA;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid #26262F;
+  border-radius: 4px;
+  background: #1A1A22;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 16px;
+  color: #A1A1AA;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid #26262F;
+  border-radius: 6px;
+  background: #0C0C10;
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(124, 92, 255, 0.35);
+}
+
+.bullet {
+  position: relative;
+  padding-left: 16px;
+}
+
+.bullet::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #7C5CFF;
+}
+
+.btn-primary,
+.btn-ghost {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background: #7C5CFF;
+  color: #fff;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: #5B3DF5;
+}
+
+.btn-ghost {
+  border: 1px solid #26262F;
+  background: #0C0C10;
+  color: #D4D4D8;
+}
+
+a.btn-ghost:hover {
+  border-color: rgba(124, 92, 255, 0.5);
+  color: #A99BFF;
+}
+
+/* --- Repères chiffrés ------------------------------------------------------ */
+
+.stat {
+  padding: 20px;
+  border: 1px solid #26262F;
+  border-radius: 6px;
+  background: #0C0C10;
+}
+
+.stat-value {
+  display: block;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #A99BFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 12px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #A1A1AA;
+}
+
+.stat-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #52525B;
+}
+
+/* --- Frise du parcours ----------------------------------------------------- */
+
+.timeline-item {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(124, 92, 255, 0.45), transparent);
+}
+
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #7C5CFF;
+  border-radius: 999px;
+  background: #08080A;
+}
+
+.timeline-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #7C5CFF;
+  animation: pulse-dot 2.2s ease-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  70%  { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* --- Formation ------------------------------------------------------------- */
+
+.edu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #26262F;
+}
+
+.edu:last-child {
+  border-bottom: 0;
+}
+
+.edu-sub {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #71717A;
+}
+
+.edu-date {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: #52525B;
+}
+
+/* --- Scrollytelling : panneau visuel --------------------------------------- */
+
+.visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+
+.visual.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Sans JS, aucun visuel ne serait activé : on affiche le premier. */
+html:not(.js) .visual:first-of-type {
+  opacity: 1;
+  transform: none;
+}
+
+.svg-caption {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  fill: #52525B;
+}
+
+.svg-value {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 26px;
+  font-weight: 700;
+  fill: #A99BFF;
+}
+
+.pulse-ring {
+  transform-origin: 200px 150px;
+  animation: ring 2.6s ease-out infinite;
+}
+
+@keyframes ring {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.flag-row {
+  animation: flag 2.4s ease-in-out infinite;
+}
+
+@keyframes flag {
+  0%, 100% { stroke-opacity: 0.45; }
+  50%      { stroke-opacity: 1; }
+}
+
+/* --- Scrollytelling : étapes ------------------------------------------------ */
+
+.step {
+  padding: 64px 0 64px 24px;
+  border-left: 1px solid #26262F;
+  transition: opacity 0.4s ease, border-color 0.4s ease;
+}
+
+/* L'atténuation des étapes inactives n'a de sens que si le JS peut les rallumer. */
+html.js .step {
+  opacity: 0.4;
+}
+
+html.js .step.is-active {
+  opacity: 1;
+  border-color: rgba(124, 92, 255, 0.6);
+}
+
+.step:first-child {
+  padding-top: 24px;
+}
+
+.step-index {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8B7CFF;
+}
+
+.step-title {
+  margin-top: 8px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.step-body {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #A1A1AA;
+}
+
+.step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+@media (min-width: 640px) {
+  .step-title { font-size: 24px; }
+  .step-body  { font-size: 16px; }
+}
+
+/* --- Stack, certifications, langues ---------------------------------------- */
+
+.stack-group {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #71717A;
+}
+
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.cert {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  border: 1px solid #26262F;
+  border-radius: 4px;
+  background: #0C0C10;
+}
+
+.cert-issuer {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8B7CFF;
+}
+
+.cert-title {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #D4D4D8;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid #26262F;
+  border-radius: 4px;
+  background: #0C0C10;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: #D4D4D8;
+}
+
+.lang-level {
+  font-size: 10px;
+  color: #52525B;
+}
+
+/* --- Apparition au défilement ---------------------------------------------- */
+
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Indicateur de défilement ---------------------------------------------- */
+
+.scroll-cue {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 28px;
+  border: 1px solid #3F3F46;
+  border-radius: 999px;
+}
+
+.scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 6px;
+  border-radius: 999px;
+  background: #7C5CFF;
+  animation: cue 1.8s ease-in-out infinite;
+}
+
+@keyframes cue {
+  0%, 100% { transform: translate(-50%, 0); opacity: 1; }
+  50%      { transform: translate(-50%, 9px); opacity: 0.3; }
+}
+
+/* --- Divers ---------------------------------------------------------------- */
+
+::selection {
+  background: rgba(124, 92, 255, 0.3);
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #08080A; }
+  ::-webkit-scrollbar-thumb { background: #26262F; border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3A3A46; }
+}
+
+/* --- Respect des préférences d'animation ----------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  html.js .reveal,
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html.js .step { opacity: 1; }
+
+  .visual {
+    transition: opacity 0.2s linear;
+    transform: none;
+  }
+
+  .visual.is-active { transform: none; }
+
+  .timeline-pulse,
+  .pulse-ring,
+  .flag-row,
+  .flow-dot,
+  .scroll-cue::after {
+    animation: none;
+  }
+}

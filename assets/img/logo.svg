@@ -1,0 +1,15 @@
+<!-- Marque Imad EL KHELYFY — reconstruction vectorielle.
+     Remplace ce fichier par ton SVG d'origine si tu l'as. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Logo">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#8B7CFF" />
+      <stop offset="1" stop-color="#5B3DF5" />
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#mark)" stroke-width="42" stroke-linejoin="miter">
+    <path d="M499 238 L628 519 L452 690 L372 519 Z" />
+    <path d="M492 430 L423 560 L462 640" />
+    <path d="M573 622 L639 762 L426 762 Z" />
+  </g>
+</svg>

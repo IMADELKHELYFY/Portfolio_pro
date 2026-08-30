@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Imad EL KHELYFY — Data Analyst / Data Engineer</title>
+<meta name="description" content="Portfolio d'Imad EL KHELYFY : pipelines de données, machine learning et IA générative. Projets, parcours et contact." />
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+
+<meta property="og:title" content="Imad EL KHELYFY — Data Analyst / Data Engineer" />
+<meta property="og:description" content="Pipelines de données, machine learning et IA générative." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Configuration Tailwind — palette dérivée du logo (violet) sur fond noir.
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: { 950: '#08080A', 900: '#0C0C10', 850: '#121218', 800: '#1A1A22' },
+          line: '#26262F',
+          brand: { 300: '#A99BFF', 400: '#8B7CFF', 500: '#7C5CFF', 600: '#5B3DF5' },
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+        borderRadius: { DEFAULT: '4px', md: '6px', lg: '10px' },
+      },
+    },
+  };
+</script>
+<script>
+  // Marque le support du JS. Sans lui, les blocs .reveal restent visibles
+  // au lieu de rester masques en attendant une animation qui ne viendra pas.
+  document.documentElement.classList.add("js");
+</script>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="bg-ink-950 font-sans text-zinc-300 antialiased">
+
+<!-- Barre de progression de lecture -->
+<div class="fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent">
+  <div id="progress" class="h-full w-0 bg-gradient-to-r from-brand-400 to-brand-600"></div>
+</div>
+
+<!-- ══════════════════ NAVIGATION ══════════════════ -->
+<header class="fixed inset-x-0 top-0 z-40 border-b border-line/70 bg-ink-950/80 backdrop-blur">
+  <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
+    <a href="#hero" class="flex items-center gap-2.5">
+      <img src="assets/img/logo.svg" alt="" class="h-7 w-7" />
+      <span class="font-mono text-sm font-semibold tracking-tight text-white">imad<span class="text-brand-400">.</span></span>
+    </a>
+
+    <ul class="hidden items-center gap-1 md:flex">
+      <li><a class="nav-link" href="#reperes">repères</a></li>
+      <li><a class="nav-link" href="#parcours">parcours</a></li>
+      <li><a class="nav-link" href="#projets">projets</a></li>
+      <li><a class="nav-link" href="#stack">stack</a></li>
+    </ul>
+
+    <a href="#contact" class="rounded border border-brand-500/50 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-brand-300 transition hover:bg-brand-500/20">
+      contact
+    </a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero" class="relative flex min-h-screen items-center overflow-hidden pt-14">
+  <div class="pointer-events-none absolute inset-0 bg-dot-grid"></div>
+  <div class="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-brand-600/20 blur-[130px]"></div>
+
+  <div class="relative mx-auto w-full max-w-6xl px-5 py-24">
+    <p class="reveal font-mono text-[11px] uppercase tracking-[0.24em] text-brand-400">
+      portfolio / data &amp; ia
+    </p>
+
+    <h1 class="reveal mt-5 max-w-4xl font-mono text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+      Imad<br />EL KHELYFY<span class="text-brand-500">.</span>
+    </h1>
+
+    <p class="reveal mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+      Je transforme des données brutes en décisions.
+      Pipelines fiables, modèles évalués honnêtement, restitutions lisibles —
+      de l'ingestion jusqu'au chiffre qu'on présente en réunion.
+    </p>
+
+    <div class="reveal mt-8 flex flex-wrap items-center gap-2">
+      <span class="chip">Data Analyst</span>
+      <span class="chip">Data Engineer</span>
+      <span class="chip">IA générative</span>
+    </div>
+
+    <div class="reveal mt-8 inline-flex items-center gap-2.5 rounded border border-brand-500/40 bg-brand-500/5 px-3.5 py-2">
+      <span class="relative flex h-2 w-2">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-60"></span>
+        <span class="relative inline-flex h-2 w-2 rounded-full bg-brand-400"></span>
+      </span>
+      <span class="font-mono text-[11px] text-brand-300">
+        Alternance 12 ou 24 mois dès le 01/09/2026 · Mobile France entière
+      </span>
+    </div>
+
+    <a href="#reperes" class="reveal mt-14 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 transition hover:text-brand-300">
+      <span class="scroll-cue"></span>
+      faire défiler
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════ REPÈRES ══════════════════ -->
+<section id="reperes" class="border-t border-line/70 py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <p class="section-label reveal">01 — repères</p>
+    <h2 class="reveal mt-3 max-w-2xl font-mono text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      Des résultats mesurés, pas des intentions.
+    </h2>
+
+    <div class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="stat reveal">
+        <span class="stat-value" data-count="92" data-suffix=" %">92 %</span>
+        <span class="stat-label">Précision du modèle AML</span>
+        <span class="stat-note">GuardianFlow — détection de blanchiment</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-value" data-count="35" data-prefix="−" data-suffix=" %">−35 %</span>
+        <span class="stat-label">Délais de traitement</span>
+        <span class="stat-note">CERIMME — extraction SQL / Python</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-value" data-count="40" data-prefix="−" data-suffix=" %">−40 %</span>
+        <span class="stat-label">Erreurs de données</span>
+        <span class="stat-note">CERIMME — scripts de Data Quality</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-value" data-count="60" data-prefix="−" data-suffix=" %">−60 %</span>
+        <span class="stat-label">Traitement manuel</span>
+        <span class="stat-note">Pipeline marketing événementiel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PARCOURS ══════════════════ -->
+<section id="parcours" class="border-t border-line/70 py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <p class="section-label reveal">02 — parcours</p>
+    <h2 class="reveal mt-3 font-mono text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      Expériences
+    </h2>
+
+    <ol class="mt-12 space-y-4">
+      <li class="timeline-item reveal">
+        <div class="timeline-dot"><span class="timeline-pulse"></span></div>
+        <div class="card">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="font-mono text-base font-medium text-white">
+              Stagiaire Data Analyst — Usage véhicules connectés
+              <span class="ml-2 rounded border border-brand-500/40 bg-brand-500/10 px-1.5 py-0.5 align-middle font-mono text-[10px] uppercase tracking-wider text-brand-300">en cours</span>
+            </h3>
+            <span class="font-mono text-[11px] text-zinc-500">Juin 2026 – Août 2026</span>
+          </div>
+          <p class="mt-1 font-mono text-xs text-brand-400">Renault Group — Aubevoye</p>
+          <ul class="mt-4 space-y-2 text-sm leading-relaxed text-zinc-400">
+            <li class="bullet">Traitement et analyse de grandes masses de données remontées des véhicules connectés</li>
+            <li class="bullet">Contrôle qualité des données pour le profilage des missions véhicules et la fiabilité</li>
+            <li class="bullet">Inférence statistique appliquée aux plans de validation (viabilité d'échantillons)</li>
+            <li class="bullet">Formalisation des critères de qualité de données pour la durabilité</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            <span class="tag">Python</span><span class="tag">Spotfire</span><span class="tag">Excel avancé</span><span class="tag">Statistiques</span><span class="tag">Big Data</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="card">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="font-mono text-base font-medium text-white">Stagiaire Data Analyst / Data Engineer</h3>
+            <span class="font-mono text-[11px] text-zinc-500">Août 2024 – Sept. 2024</span>
+          </div>
+          <p class="mt-1 font-mono text-xs text-brand-400">CERIMME — Casablanca</p>
+          <ul class="mt-4 space-y-2 text-sm leading-relaxed text-zinc-400">
+            <li class="bullet">Extraction de données via SQL / Python — délais réduits de <strong class="text-white">35 %</strong></li>
+            <li class="bullet">Détection d'anomalies par scripts de Data Quality — erreurs réduites de <strong class="text-white">40 %</strong></li>
+            <li class="bullet">Dashboards Power BI interactifs pour le pilotage d'activité</li>
+            <li class="bullet">Automatisation de pipelines ETL et documentation technique</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">ETL</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="card">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="font-mono text-base font-medium text-white">Stagiaire Support Informatique / DevOps</h3>
+            <span class="font-mono text-[11px] text-zinc-500">Mai–Juin 2023 · Août–Sept. 2022</span>
+          </div>
+          <p class="mt-1 font-mono text-xs text-brand-400">CERIMME — Casablanca</p>
+          <ul class="mt-4 space-y-2 text-sm leading-relaxed text-zinc-400">
+            <li class="bullet">Déploiement d'environnements conteneurisés — mise en production réduite de <strong class="text-white">30 %</strong></li>
+            <li class="bullet">Monitoring d'infrastructure et tableaux de bord SQL temps réel</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            <span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Zabbix</span><span class="tag">Linux</span>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <h3 class="reveal mt-16 font-mono text-lg font-semibold tracking-tight text-white">Formation</h3>
+    <ul class="reveal mt-5 overflow-hidden rounded-md border border-line">
+      <li class="edu">
+        <div><p class="font-mono text-sm text-white">Master 1 Ingénierie des Systèmes Complexes</p><p class="edu-sub">EILCO — Calais, France</p></div>
+        <span class="edu-date">2025 – en cours</span>
+      </li>
+      <li class="edu">
+        <div><p class="font-mono text-sm text-white">Master 1 Sciences des Données et IA</p><p class="edu-sub">Faculté des Sciences — Meknès, Maroc</p></div>
+        <span class="edu-date">2024 – 2025</span>
+      </li>
+      <li class="edu">
+        <div><p class="font-mono text-sm text-white">Licence Sciences des Données et IA</p><p class="edu-sub">Faculté des Sciences — Meknès, Maroc</p></div>
+        <span class="edu-date">2023 – 2024</span>
+      </li>
+      <li class="edu">
+        <div><p class="font-mono text-sm text-white">BTS Systèmes et Réseaux Informatiques</p><p class="edu-sub">Lycée Ibn Al-Khatib — Maroc</p></div>
+        <span class="edu-date">2021 – 2023</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════ PROJETS — SCROLLYTELLING ══════════════════ -->
+<section id="projets" class="border-t border-line/70 py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <p class="section-label reveal">03 — projets</p>
+    <h2 class="reveal mt-3 max-w-2xl font-mono text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      Cinq projets, cinq problèmes concrets.
+    </h2>
+    <p class="reveal mt-3 max-w-xl text-sm text-zinc-500">
+      Fais défiler : le schéma à droite suit le projet que tu lis.
+    </p>
+  </div>
+
+  <div id="scrolly" class="mx-auto mt-12 grid max-w-6xl gap-6 px-5 lg:grid-cols-2 lg:gap-14">
+
+    <!-- Panneau visuel collant -->
+    <div class="sticky top-14 z-10 -mx-5 bg-ink-950/95 px-5 py-3 backdrop-blur lg:order-2 lg:top-0 lg:mx-0 lg:flex lg:h-screen lg:items-center lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+      <div class="relative h-[34vh] w-full overflow-hidden rounded-lg border border-line bg-ink-900 lg:h-[62vh]">
+        <div class="absolute inset-0 bg-line-grid opacity-60"></div>
+
+        <!-- 1 · GraphRAG -->
+        <figure class="visual is-active" data-visual="graphrag">
+          <svg viewBox="0 0 400 300" class="h-full w-full">
+            <g stroke="#7C5CFF" stroke-opacity="0.45" stroke-width="1.5">
+              <line x1="200" y1="150" x2="110" y2="80" /><line x1="200" y1="150" x2="300" y2="90" />
+              <line x1="200" y1="150" x2="120" y2="225" /><line x1="200" y1="150" x2="295" y2="215" />
+              <line x1="110" y1="80" x2="300" y2="90" /><line x1="120" y1="225" x2="295" y2="215" />
+              <line x1="110" y1="80" x2="120" y2="225" />
+            </g>
+            <g>
+              <circle cx="200" cy="150" r="17" fill="#7C5CFF" />
+              <circle cx="110" cy="80" r="10" fill="#8B7CFF" fill-opacity="0.75" />
+              <circle cx="300" cy="90" r="12" fill="#8B7CFF" fill-opacity="0.75" />
+              <circle cx="120" cy="225" r="9" fill="#8B7CFF" fill-opacity="0.6" />
+              <circle cx="295" cy="215" r="13" fill="#8B7CFF" fill-opacity="0.75" />
+              <circle cx="200" cy="150" r="28" fill="none" stroke="#7C5CFF" stroke-opacity="0.5" class="pulse-ring" />
+            </g>
+            <text x="200" y="284" text-anchor="middle" class="svg-caption">graphe de connaissances · PageRank</text>
+          </svg>
+        </figure>
+
+        <!-- 2 · GuardianFlow -->
+        <figure class="visual" data-visual="guardianflow">
+          <svg viewBox="0 0 400 300" class="h-full w-full">
+            <g font-family="JetBrains Mono, monospace" font-size="9">
+              <rect x="60" y="52"  width="280" height="26" rx="3" fill="#1A1A22" />
+              <rect x="60" y="86"  width="280" height="26" rx="3" fill="#1A1A22" />
+              <rect x="60" y="120" width="280" height="26" rx="3" fill="#5B3DF5" fill-opacity="0.22" stroke="#7C5CFF" class="flag-row" />
+              <rect x="60" y="154" width="280" height="26" rx="3" fill="#1A1A22" />
+              <rect x="60" y="188" width="280" height="26" rx="3" fill="#1A1A22" />
+              <text x="72" y="69"  fill="#71717A">TX-4417   1 240 €    score 0.08</text>
+              <text x="72" y="103" fill="#71717A">TX-4418     980 €    score 0.11</text>
+              <text x="72" y="137" fill="#A99BFF">TX-4419  46 800 €    score 0.94</text>
+              <text x="72" y="171" fill="#71717A">TX-4420     310 €    score 0.05</text>
+              <text x="72" y="205" fill="#71717A">TX-4421   2 070 €    score 0.19</text>
+            </g>
+            <text x="200" y="248" text-anchor="middle" class="svg-value">92 %</text>
+            <text x="200" y="272" text-anchor="middle" class="svg-caption">précision · alerte levée sur TX-4419</text>
+          </svg>
+        </figure>
+
+        <!-- 3 · Intelligent Event Bot -->
+        <figure class="visual" data-visual="eventbot">
+          <svg viewBox="0 0 400 300" class="h-full w-full">
+            <g font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">
+              <rect x="26"  y="120" width="76" height="46" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <rect x="122" y="120" width="76" height="46" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <rect x="218" y="120" width="76" height="46" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <rect x="314" y="120" width="60" height="46" rx="4" fill="#5B3DF5" fill-opacity="0.2" stroke="#7C5CFF" />
+              <text x="64"  y="140" fill="#A1A1AA">détection</text><text x="64"  y="154" fill="#52525B">événement</text>
+              <text x="160" y="140" fill="#A1A1AA">génération</text><text x="160" y="154" fill="#52525B">Gemini</text>
+              <text x="256" y="140" fill="#A1A1AA">rendu</text><text x="256" y="154" fill="#52525B">template</text>
+              <text x="344" y="140" fill="#A99BFF">envoi</text><text x="344" y="154" fill="#8B7CFF">email</text>
+            </g>
+            <g stroke="#7C5CFF" stroke-opacity="0.5" stroke-width="1.5">
+              <line x1="102" y1="143" x2="122" y2="143" /><line x1="198" y1="143" x2="218" y2="143" /><line x1="294" y1="143" x2="314" y2="143" />
+            </g>
+            <circle r="4" fill="#A99BFF" class="flow-dot"><animateMotion dur="3.2s" repeatCount="indefinite" path="M40,143 L360,143" /></circle>
+            <text x="200" y="212" text-anchor="middle" class="svg-value">−60 %</text>
+            <text x="200" y="236" text-anchor="middle" class="svg-caption">de traitement manuel · orchestré par n8n</text>
+          </svg>
+        </figure>
+
+        <!-- 4 · EduChatbot -->
+        <figure class="visual" data-visual="educhatbot">
+          <svg viewBox="0 0 400 300" class="h-full w-full">
+            <g font-family="JetBrains Mono, monospace" font-size="9">
+              <rect x="52" y="54" width="180" height="30" rx="6" fill="#1A1A22" />
+              <text x="66" y="73" fill="#A1A1AA">« Je pars de zéro en data »</text>
+              <rect x="150" y="98" width="198" height="30" rx="6" fill="#5B3DF5" fill-opacity="0.2" stroke="#7C5CFF" />
+              <text x="164" y="117" fill="#A99BFF">Roadmap en 4 étapes générée</text>
+            </g>
+            <g font-family="JetBrains Mono, monospace" font-size="9">
+              <rect x="52" y="150" width="296" height="22" rx="3" fill="#1A1A22" /><text x="64" y="165" fill="#A1A1AA">01 · Python &amp; manipulation de données</text>
+              <rect x="52" y="178" width="296" height="22" rx="3" fill="#1A1A22" /><text x="64" y="193" fill="#A1A1AA">02 · SQL et modélisation</text>
+              <rect x="52" y="206" width="296" height="22" rx="3" fill="#1A1A22" /><text x="64" y="221" fill="#71717A">03 · Statistiques appliquées</text>
+              <rect x="52" y="234" width="296" height="22" rx="3" fill="#1A1A22" /><text x="64" y="249" fill="#71717A">04 · Machine learning</text>
+            </g>
+            <text x="200" y="282" text-anchor="middle" class="svg-caption">parcours personnalisé · Gemini + Streamlit</text>
+          </svg>
+        </figure>
+
+        <!-- 5 · MCP Platform -->
+        <figure class="visual" data-visual="mcp">
+          <svg viewBox="0 0 400 300" class="h-full w-full">
+            <g font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">
+              <rect x="150" y="118" width="100" height="52" rx="5" fill="#5B3DF5" fill-opacity="0.22" stroke="#7C5CFF" />
+              <text x="200" y="140" fill="#A99BFF">serveur MCP</text><text x="200" y="156" fill="#8B7CFF">Spring Boot</text>
+
+              <rect x="24"  y="52"  width="86" height="40" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <text x="67"  y="77" fill="#A1A1AA">Angular</text>
+              <rect x="24"  y="200" width="86" height="40" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <text x="67"  y="225" fill="#A1A1AA">Ollama</text>
+              <rect x="290" y="52"  width="86" height="40" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <text x="333" y="77" fill="#A1A1AA">outils Python</text>
+              <rect x="290" y="200" width="86" height="40" rx="4" fill="#1A1A22" stroke="#26262F" />
+              <text x="333" y="225" fill="#A1A1AA">REST API</text>
+            </g>
+            <g stroke="#7C5CFF" stroke-opacity="0.45" stroke-width="1.5">
+              <line x1="110" y1="72"  x2="168" y2="122" /><line x1="110" y1="220" x2="168" y2="166" />
+              <line x1="290" y1="72"  x2="232" y2="122" /><line x1="290" y1="220" x2="232" y2="166" />
+            </g>
+            <text x="200" y="282" text-anchor="middle" class="svg-caption">protocole standardisé entre LLM et outils</text>
+          </svg>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Étapes du récit -->
+    <div class="lg:order-1">
+      <article class="step" data-step="graphrag">
+        <p class="step-index">projet 01</p>
+        <h3 class="step-title">GraphRAG vs Simple RAG</h3>
+        <p class="step-body">
+          Deux façons de retrouver l'information pour un LLM : la recherche vectorielle
+          classique, et un graphe de connaissances structuré. J'ai construit les deux
+          pour les comparer sur des questions à raisonnement multi-étapes, là où le RAG
+          simple perd le fil.
+        </p>
+        <p class="step-body">
+          Le graphe relie entités et relations dans Neo4j ; un PageRank pondère les nœuds
+          pour ne remonter que le contexte qui compte. Sur les questions liant plusieurs
+          documents, la pertinence du contexte remonté devient nettement supérieure.
+        </p>
+        <div class="step-tags">
+          <span class="tag">Neo4j</span><span class="tag">LangChain</span><span class="tag">Python</span><span class="tag">Embeddings</span><span class="tag">NLP</span>
+        </div>
+      </article>
+
+      <article class="step" data-step="guardianflow">
+        <p class="step-index">projet 02</p>
+        <h3 class="step-title">GuardianFlow — détection de blanchiment</h3>
+        <p class="step-body">
+          Une chaîne complète de surveillance financière : ingestion des transactions,
+          feature engineering, entraînement du modèle, puis restitution. Le modèle
+          atteint <strong class="text-white">92 % de précision</strong> sur la détection
+          de comportements suspects.
+        </p>
+        <p class="step-body">
+          L'intérêt du projet n'est pas le score : c'est la chaîne de bout en bout —
+          API REST en Flask, stockage PostgreSQL, conteneurisation Docker, et un
+          dashboard où un analyste peut réellement instruire une alerte.
+        </p>
+        <div class="step-tags">
+          <span class="tag">Scikit-learn</span><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">Power BI</span>
+        </div>
+      </article>
+
+      <article class="step" data-step="eventbot">
+        <p class="step-index">projet 03</p>
+        <h3 class="step-title">Intelligent Event Bot</h3>
+        <p class="step-body">
+          Un pipeline événementiel orchestré avec n8n : détection d'un événement,
+          génération du contenu marketing par IA, personnalisation, envoi.
+          Le traitement manuel a chuté de <strong class="text-white">60 %</strong>.
+        </p>
+        <p class="step-body">
+          Architecture pilotée par les événements plutôt que par un planificateur :
+          chaque étape est indépendante, rejouable, et observable — on sait toujours
+          où un message s'est arrêté.
+        </p>
+        <div class="step-tags">
+          <span class="tag">n8n</span><span class="tag">Gemini AI</span><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">REST</span>
+        </div>
+      </article>
+
+      <article class="step" data-step="educhatbot">
+        <p class="step-index">projet 04</p>
+        <h3 class="step-title">EduChatbot — mentor IA</h3>
+        <p class="step-body">
+          Une plateforme qui génère des parcours d'apprentissage en data science adaptés
+          au niveau réel de la personne, avec un tuteur conversationnel disponible à
+          chaque étape.
+        </p>
+        <p class="step-body">
+          Intégration LLM de bout en bout : cadrage du prompt, structuration de la
+          réponse en étapes exploitables, et interface Streamlit assez simple pour
+          qu'un débutant s'en serve sans mode d'emploi.
+        </p>
+        <div class="step-tags">
+          <span class="tag">Gemini AI</span><span class="tag">Streamlit</span><span class="tag">Python</span><span class="tag">LLM</span>
+        </div>
+      </article>
+
+      <article class="step" data-step="mcp">
+        <p class="step-index">projet 05</p>
+        <h3 class="step-title">MCP Platform</h3>
+        <p class="step-body">
+          Une architecture distribuée implémentant le Model Context Protocol : elle
+          permet à un LLM d'appeler des outils tiers de façon standardisée et contrôlée,
+          au lieu d'intégrations ad hoc qui cassent à chaque changement.
+        </p>
+        <p class="step-body">
+          Trois briques qui se parlent — serveur Spring Boot, interface Angular, outils
+          Python — avec Ollama en modèle local. Approche API-first, contrat explicite
+          entre les services.
+        </p>
+        <div class="step-tags">
+          <span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">Python</span><span class="tag">Ollama</span><span class="tag">Microservices</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ STACK ══════════════════ -->
+<section id="stack" class="border-t border-line/70 py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <p class="section-label reveal">04 — stack</p>
+    <h2 class="reveal mt-3 font-mono text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      Outils du quotidien
+    </h2>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="reveal"><p class="stack-group">IA &amp; Data Science</p><div class="stack-list"><span class="tag">Scikit-learn</span><span class="tag">LangChain</span><span class="tag">RAG / GraphRAG</span><span class="tag">LLMs</span><span class="tag">TensorFlow</span><span class="tag">NLP</span></div></div>
+      <div class="reveal"><p class="stack-group">Big Data &amp; orchestration</p><div class="stack-list"><span class="tag">Apache Spark</span><span class="tag">PySpark</span><span class="tag">Hadoop</span><span class="tag">Airflow</span><span class="tag">Databricks</span></div></div>
+      <div class="reveal"><p class="stack-group">Cloud</p><div class="stack-list"><span class="tag">AWS S3</span><span class="tag">Glue</span><span class="tag">Redshift</span><span class="tag">Lambda</span><span class="tag">GCP</span><span class="tag">Snowflake</span></div></div>
+      <div class="reveal"><p class="stack-group">Données &amp; ETL</p><div class="stack-list"><span class="tag">SQL avancé</span><span class="tag">PostgreSQL</span><span class="tag">Neo4j</span><span class="tag">dbt</span><span class="tag">Data Lake</span><span class="tag">Data Warehouse</span></div></div>
+      <div class="reveal"><p class="stack-group">Langages &amp; frameworks</p><div class="stack-list"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">TypeScript</span><span class="tag">Bash</span><span class="tag">Spring Boot</span><span class="tag">FastAPI</span></div></div>
+      <div class="reveal"><p class="stack-group">Dataviz &amp; DevOps</p><div class="stack-list"><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Spotfire</span><span class="tag">Streamlit</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div></div>
+    </div>
+
+    <h3 class="reveal mt-16 font-mono text-lg font-semibold tracking-tight text-white">Certifications</h3>
+    <div class="reveal mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="cert"><span class="cert-issuer">IBM</span><span class="cert-title">AI Agents Using RAG and LangChain</span></div>
+      <div class="cert"><span class="cert-issuer">IBM</span><span class="cert-title">Data Engineering : Pipelines, ETL, Hadoop</span></div>
+      <div class="cert"><span class="cert-issuer">IBM</span><span class="cert-title">Python for Data Science, AI &amp; Development</span></div>
+      <div class="cert"><span class="cert-issuer">AWS</span><span class="cert-title">Cloud Technical Essentials</span></div>
+      <div class="cert"><span class="cert-issuer">Google</span><span class="cert-title">Agile Project Management</span></div>
+      <div class="cert"><span class="cert-issuer">Cisco</span><span class="cert-title">Introduction to Data Science</span></div>
+    </div>
+
+    <h3 class="reveal mt-16 font-mono text-lg font-semibold tracking-tight text-white">Langues</h3>
+    <ul class="reveal mt-5 flex flex-wrap gap-2">
+      <li class="lang">Français <span class="lang-level">C1</span></li>
+      <li class="lang">Anglais <span class="lang-level">C1</span></li>
+      <li class="lang">Arabe <span class="lang-level">natif</span></li>
+      <li class="lang">Allemand <span class="lang-level">notions</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section id="contact" class="relative overflow-hidden border-t border-line/70 py-28">
+  <div class="pointer-events-none absolute inset-0 bg-dot-grid"></div>
+  <div class="pointer-events-none absolute bottom-[-220px] left-1/2 h-[460px] w-[760px] -translate-x-1/2 rounded-full bg-brand-600/18 blur-[130px]"></div>
+
+  <div class="relative mx-auto max-w-6xl px-5">
+    <p class="section-label reveal">05 — contact</p>
+    <h2 class="reveal mt-3 max-w-2xl font-mono text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+      Une alternance à pourvoir en data<span class="text-brand-500"> ?</span>
+    </h2>
+    <p class="reveal mt-4 max-w-xl text-base leading-relaxed text-zinc-400">
+      Disponible à partir du 1<sup>er</sup> septembre 2026, pour 12 ou 24 mois,
+      mobile sur toute la France. Le plus simple reste un mail.
+    </p>
+
+    <div class="reveal mt-9 flex flex-wrap gap-2.5">
+      <a class="btn-primary" href="mailto:imadelkhelyfy@gmail.com">imadelkhelyfy@gmail.com</a>
+      <a class="btn-ghost" href="tel:+33758421176">+33 7 58 42 11 76</a>
+      <a class="btn-ghost" href="https://www.linkedin.com/in/imad-el-khelyfy-4514ba312/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn-ghost" href="https://github.com/IMADELKHELYFY" target="_blank" rel="noopener">GitHub</a>
+      <span class="btn-ghost pointer-events-none">Calais (62)</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-line/70 py-8">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5">
+    <p class="font-mono text-[11px] text-zinc-600">© <span id="year">2026</span> Imad EL KHELYFY</p>
+    <p class="font-mono text-[11px] text-zinc-600">HTML · Tailwind · JavaScript — sans framework</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

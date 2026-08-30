@@ -1,177 +1,147 @@
-# Portfolio data + panel admin
+# Portfolio — Imad EL KHELYFY
 
-Portfolio de projets data (analyse, ingénierie, visualisation) avec un panel
-d'administration complet. Stack unique Next.js — pas de backend séparé.
+Portfolio personnel en **scrollytelling** : une page unique où le schéma de droite
+suit le projet que l'on est en train de lire.
 
-- **Framework** : Next.js 14 (App Router), TypeScript strict
-- **UI** : Tailwind CSS + composants shadcn/ui restylés (monospace / terminal, thème sombre par défaut)
-- **Base de données** : SQLite en local via Prisma (PostgreSQL en production)
-- **Auth admin** : NextAuth.js (credentials, compte unique, aucune inscription publique)
-- **Uploads** : UploadThing (images de projet + fichiers joints)
-- **Mutations** : Server Actions validées par Zod
+Site **statique**, sans framework et sans build : HTML + Tailwind (CDN) +
+JavaScript natif. Pour modifier quoi que ce soit, on édite le code directement.
 
 ---
 
-## 1. Prérequis
+## Lancer le site
 
-- Node.js 18.18+ (testé sur Node 22)
-- pnpm 9 (`corepack enable pnpm`)
-- Un compte [UploadThing](https://uploadthing.com) (gratuit) pour les uploads
+Il suffit d'ouvrir `index.html` dans un navigateur — double-clic, rien à installer.
 
-## 2. Installation locale
-
-```bash
-pnpm install
-```
-
-Copie le fichier d'exemple d'environnement :
+Pour travailler confortablement (rechargement propre, chemins corrects), un petit
+serveur local suffit :
 
 ```bash
-cp .env.example .env
+python -m http.server 3000
 ```
 
-Puis renseigne les six variables :
+Puis <http://localhost:3000>.
 
-| Variable | À quoi ça sert |
+---
+
+## Structure
+
+```
+index.html              toute la page : contenu et mise en page
+assets/
+  css/style.css         motifs de fond, animations, composants (.card, .tag, .step…)
+  js/main.js            progression, apparitions, compteurs, scrollytelling
+  img/logo.svg          la marque, utilisée aussi comme favicon
+```
+
+Trois fichiers, c'est tout. Pas de `node_modules`, pas de compilation.
+
+---
+
+## Modifier le contenu
+
+Tout le texte est dans `index.html`, dans l'ordre des sections :
+
+| Section | Ce qu'on y trouve |
 | --- | --- |
-| `DATABASE_URL` | `file:./dev.db` en local (SQLite). En production : chaîne PostgreSQL |
-| `NEXTAUTH_SECRET` | Secret de signature des sessions — `openssl rand -base64 32` |
-| `NEXTAUTH_URL` | `http://localhost:3000` en local, l'URL publique en production |
-| `UPLOADTHING_TOKEN` | Jeton UploadThing (dashboard → API Keys) |
-| `ADMIN_EMAIL` | Identifiant du compte admin créé par le seed |
-| `ADMIN_PASSWORD` | Mot de passe de ce compte (haché en base par le seed) |
+| `#hero` | nom, accroche, disponibilité |
+| `#reperes` | les 4 chiffres clés (voir ci-dessous) |
+| `#parcours` | expériences et formation |
+| `#projets` | les 5 projets — c'est la partie scrollytelling |
+| `#stack` | technologies, certifications, langues |
+| `#contact` | mail, téléphone, LinkedIn, GitHub |
 
-## 3. Base de données
+### Ajouter un chiffre clé
 
-```bash
-pnpm db:push
+Un bloc `.stat` dans `#reperes`. L'attribut `data-count` est la valeur ; le
+compteur s'anime tout seul quand le bloc entre à l'écran.
+
+```html
+<div class="stat reveal">
+  <span class="stat-value" data-count="12" data-suffix=" mois">0</span>
+  <span class="stat-label">Durée du projet</span>
+  <span class="stat-note">Contexte en une ligne</span>
+</div>
 ```
 
-```bash
-pnpm db:seed
+`data-prefix` existe aussi (utilisé pour les `−35 %`).
+
+### Ajouter un projet au scrollytelling
+
+Deux morceaux à ajouter, **reliés par le même identifiant** :
+
+1. Le texte, dans la colonne des étapes :
+
+```html
+<article class="step" data-step="mon-projet">
+  <p class="step-index">projet 06</p>
+  <h3 class="step-title">Nom du projet</h3>
+  <p class="step-body">Le problème, puis ce que ça a changé.</p>
+  <div class="step-tags"><span class="tag">Python</span></div>
+</article>
 ```
 
-Le seed crée le compte admin (`ADMIN_EMAIL` / `ADMIN_PASSWORD`, mot de passe
-haché avec bcrypt), quatre catégories et quatre projets de démonstration. Il est
-rejouable : relancer le seed met à jour le mot de passe admin sans dupliquer les
-données.
+2. Le schéma, dans le panneau collant :
 
-## 4. Lancer le projet
-
-```bash
-pnpm dev
+```html
+<figure class="visual" data-visual="mon-projet">
+  <svg viewBox="0 0 400 300" class="h-full w-full">
+    <!-- dessin libre : formes, texte, animation -->
+  </svg>
+</figure>
 ```
 
-- Site public : <http://localhost:3000>
-- Connexion admin : <http://localhost:3000/admin/login>
+`data-step` et `data-visual` doivent être **identiques** — c'est ce qui fait le
+lien. Le JavaScript s'occupe du reste, il n'y a rien d'autre à déclarer.
 
-## 5. Scripts
+### Ajouter une expérience
 
-| Commande | Effet |
-| --- | --- |
-| `pnpm dev` | Serveur de développement |
-| `pnpm build` | `prisma generate` puis build de production |
-| `pnpm start` | Serveur de production |
-| `pnpm lint` | ESLint (config Next) |
-| `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm db:push` | Applique le schéma Prisma à la base |
-| `pnpm db:seed` | Compte admin + catégories + projets de démo |
-| `pnpm db:studio` | Prisma Studio (explorateur de base) |
+Copier un `<li class="timeline-item reveal">` dans `#parcours`. Le trait vertical
+et la pastille sont automatiques ; `timeline-pulse` ne sert qu'au poste en cours.
 
-## 6. Structure
+### Faire apparaître un bloc au défilement
 
-```
-app/
-  (public)/          site public (accueil, projet, à propos)
-  admin/
-    login/           page de connexion (hors protection)
-    (protected)/     dashboard, projets, catégories, commentaires
-  actions/           Server Actions (projets, catégories, commentaires)
-  api/
-    auth/[...nextauth]/  handler NextAuth (imposé par la lib)
-    uploadthing/         routes d'upload
-components/
-  ui/                primitives shadcn restylées
-  admin/             formulaires et outils du panel
-  project-card.tsx, project-carousel.tsx, comment-section.tsx, sparkline.tsx…
-lib/
-  prisma.ts          client Prisma singleton
-  auth.ts            options NextAuth + garde-fou des Server Actions
-  validations.ts     schémas Zod partagés
-  metrics.ts, form.ts, utils.ts, uploadthing.ts
-prisma/
-  schema.prisma      modèle de données
-  seed.ts            script de seed
-middleware.ts        protection de /admin/* sauf /admin/login
-```
+Ajouter la classe `reveal` sur n'importe quel élément. Rien d'autre à faire.
 
-## 7. Fonctionnement du panel admin
+---
 
-- **Dashboard** — tuiles de synthèse (projets, mis en avant, commentaires en
-  attente, catégories) et table des projets avec édition, mise en avant et
-  suppression.
-- **Formulaire projet** — éditeur markdown avec aperçu, tags de stack,
-  métriques chiffrées (affichées en tête de la page projet), upload multiple
-  d'images réordonnables en glisser-déposer, upload de fichiers joints.
-- **Catégories** — création, renommage, suppression (refusée si des projets y
-  sont rattachés).
-- **Commentaires** — file de modération : rien n'est publié sans approbation.
-  Le formulaire public embarque un honeypot anti-spam.
+## Changer le logo
 
-Le slug d'un projet est généré depuis le titre et rendu unique
-automatiquement (`mon-projet`, `mon-projet-2`, …). Les images et fichiers sont
-remplacés en bloc à chaque enregistrement : l'ordre affiché dans le formulaire
-fait foi.
+Remplacer `assets/img/logo.svg` par le fichier d'origine, en gardant le même nom.
+Il sert à la fois de logo dans l'en-tête et de favicon.
 
-## 8. Déploiement (Vercel + Neon)
+> Le SVG actuel est une reconstruction approximative de la marque, faite à partir
+> d'une image. À remplacer par l'original dès que possible.
 
-> SQLite ne fonctionne pas sur Vercel : le système de fichiers y est en lecture
-> seule et remis à zéro à chaque déploiement. Il faut passer à PostgreSQL.
+---
 
-1. **Base** — crée un projet sur [Neon](https://neon.tech) et copie la chaîne
-   de connexion *pooled* (elle contient `-pooler`), avec `?sslmode=require`.
-2. **Provider** — dans `prisma/schema.prisma`, remplace
-   `provider = "sqlite"` par `provider = "postgresql"`. Aucun autre changement
-   n'est nécessaire : `techStack` et `metrics` sont du texte JSON, valide sur
-   les deux moteurs.
-3. **Dépôt** — pousse le code sur GitHub, puis importe le dépôt sur
-   [Vercel](https://vercel.com/new).
-4. **Variables d'environnement** — dans Vercel → Settings → Environment
-   Variables, renseigne les six variables du tableau ci-dessus.
-   `NEXTAUTH_URL` doit valoir l'URL de production (`https://<projet>.vercel.app`).
-5. **Build** — la commande par défaut suffit : `pnpm build` exécute
-   `prisma generate` avant le build Next.
-6. **Schéma et seed** — depuis ta machine, avec le `DATABASE_URL` de production
-   dans un `.env` temporaire :
+## Changer les couleurs
 
-   ```bash
-   pnpm db:push
-   ```
+La palette est déclarée à deux endroits, à garder synchronisés :
 
-   ```bash
-   pnpm db:seed
-   ```
+- `index.html`, dans le bloc `tailwind.config` — les couleurs `brand`, `ink`, `line`
+- `assets/css/style.css`, en commentaire en haut du fichier, puis dans les règles
 
-7. **UploadThing** — dans le dashboard UploadThing, ajoute le domaine de
-   production aux origines autorisées, puis reporte `UPLOADTHING_TOKEN` dans
-   Vercel.
+Le violet vient du logo : `#A99BFF` → `#5B3DF5`.
 
-Après le premier déploiement, connecte-toi sur `/admin/login` et change les
-identifiants du seed pour un mot de passe personnel (relance `pnpm db:seed`
-avec un nouvel `ADMIN_PASSWORD`).
+---
 
-## 9. Choix techniques notables
+## Mettre en ligne
 
-- **Server Actions partout** — les seules routes API sont celles imposées par
-  NextAuth et UploadThing. Toute écriture passe par une action serveur qui
-  valide son entrée avec Zod et vérifie la session admin.
-- **Pages dynamiques** — les pages qui lisent la base sont en
-  `force-dynamic` : le build ne nécessite donc pas de base accessible.
-- **Composants serveur par défaut** — `"use client"` est réservé aux
-  formulaires, au carousel, au glisser-déposer et au sélecteur de thème.
-- **JSON sérialisé plutôt que colonnes natives** — SQLite n'a ni liste scalaire
-  ni type Json. `techStack` et `metrics` sont stockés en texte JSON et convertis
-  par `lib/serialize.ts`, ce qui rend le schéma valable sur SQLite comme sur
-  PostgreSQL.
-- **Sparklines décoratives** — générées en SVG à partir d'un hash du slug,
-  sans librairie de graphiques : le rendu est stable entre serveur et client.
+Site statique : n'importe quel hébergeur gratuit convient, sans configuration.
+
+- **GitHub Pages** — Settings → Pages → Branch `main`, dossier `/ (root)`
+- **Netlify** — glisser-déposer le dossier, ou connecter le dépôt (aucune commande
+  de build, dossier à publier : la racine)
+- **Vercel** — importer le dépôt, framework « Other »
+
+---
+
+## Notes techniques
+
+- **Tailwind via CDN** : pratique (zéro build), mais le navigateur télécharge et
+  compile le CSS à chaque visite. Si le site devient une vitrine sérieuse,
+  passer à Tailwind CLI pour générer un fichier CSS figé.
+- **Accessibilité** : `prefers-reduced-motion` est respecté — animations,
+  compteurs et transitions sont désactivés pour qui l'a demandé dans son système.
+- **Aucun traqueur, aucun cookie, aucune requête vers un serveur** en dehors des
+  polices Google et du CDN Tailwind.
