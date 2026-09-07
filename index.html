@@ -13,7 +13,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -78,6 +78,7 @@
 <link rel="stylesheet" href="assets/css/tokens.css" />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/cases.css" />
+<link rel="stylesheet" href="assets/css/hero.css" />
 </head>
 
 <body class="bg-ink-950 font-sans text-zinc-300 antialiased">
@@ -92,7 +93,7 @@
   <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
     <a href="#hero" class="flex items-center gap-2.5">
       <img src="assets/img/logo.svg" alt="" class="h-7 w-7" />
-      <span class="font-mono text-sm font-semibold tracking-tight text-white">imad<span class="text-brand-400">.</span></span>
+      <span class="nav-brand font-mono text-sm font-semibold tracking-tight text-white">imad<span class="dot text-brand-400">.</span></span>
     </a>
 
     <ul class="hidden items-center gap-1 lg:flex">
@@ -115,7 +116,7 @@
         <svg class="i-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
 
-      <a href="#contact" class="rounded border border-brand-500/50 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-brand-300 transition hover:bg-brand-500/20" data-i18n="nav.contact">
+      <a href="#contact" class="nav-contact rounded border border-brand-500/50 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-brand-300 transition hover:bg-brand-500/20" data-i18n="nav.contact">
         contact
       </a>
     </div>
@@ -125,38 +126,47 @@
 <main>
 
 <!-- ══════════════════ HERO ══════════════════ -->
-<section id="hero" class="relative flex min-h-screen items-center overflow-hidden pt-14">
+<!-- Page de couverture : toujours sombre, indépendante du thème. -->
+<section id="hero" class="hero-dark">
 
-  <div class="relative mx-auto w-full max-w-6xl px-5 py-24">
-    <p class="reveal font-mono text-[11px] uppercase tracking-[0.24em] text-brand-400" data-i18n="hero.eyebrow">
-      portfolio / data &amp; ia
-    </p>
+  <!-- Faisceau : quatre calques CSS, aucune image -->
+  <div class="hero-beam" aria-hidden="true">
+    <span class="beam-glow"></span>
+    <span class="beam-core"></span>
+    <span class="beam-floor"></span>
+    <span class="beam-spark"></span>
+  </div>
 
-    <h1 class="reveal mt-5 max-w-4xl font-mono text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
-      Imad<br />EL KHELYFY<span class="text-brand-500">.</span>
-    </h1>
+  <div class="hero-inner">
+    <p class="hero-eyebrow hero-rise" data-i18n="hero.eyebrow">portfolio / data &amp; ia</p>
 
-    <p class="reveal mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg" data-i18n="hero.lead">
+    <h1 class="hero-title hero-rise">Imad EL KHELYFY</h1>
+
+    <p class="hero-lead hero-rise" data-i18n="hero.lead">
       Je transforme des données brutes en décisions.
       Pipelines fiables, modèles évalués honnêtement, restitutions lisibles —
       de l'ingestion jusqu'au chiffre qu'on présente en réunion.
     </p>
 
-    <div class="reveal mt-8 flex flex-wrap items-center gap-2">
-      <span class="chip">Data Analyst</span>
-      <span class="chip">Data Engineer</span>
-      <span class="chip" data-i18n="hero.chip3">IA générative</span>
+    <div class="hero-chips hero-rise">
+      <span class="hero-chip">Data Analyst</span>
+      <span class="hero-chip">Data Engineer</span>
+      <span class="hero-chip" data-i18n="hero.chip3">IA générative</span>
     </div>
 
-    <div class="reveal mt-10 flex flex-wrap gap-2.5">
-      <a class="btn-primary" href="#projets" data-i18n="hero.cta1">Voir les projets</a>
-      <a class="btn-ghost" href="#contact" data-i18n="hero.cta2">Me contacter</a>
+    <div class="hero-actions hero-rise">
+      <a class="hero-btn" href="#projets">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5L13 3z"/></svg>
+        <span data-i18n="hero.cta1">Voir les projets</span>
+      </a>
+      <a class="hero-btn hero-btn--ghost" href="#contact" data-i18n="hero.cta2">Me contacter</a>
     </div>
+  </div>
 
-    <a href="#parcours" class="reveal mt-12 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 transition hover:text-brand-300">
-      <span class="scroll-cue"></span>
-      <span data-i18n="hero.scroll">faire défiler</span>
-    </a>
+  <!-- La capture est posée dans la lumière du faisceau -->
+  <div class="hero-shot hero-rise">
+    <img src="assets/img/shots/retailpulse/01-vue-ensemble.webp"
+         alt="RetailPulse Analytics — vue d'ensemble" width="1600" height="1000" />
   </div>
 </section>
 
