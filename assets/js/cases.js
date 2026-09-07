@@ -2222,7 +2222,10 @@ tables in one go.`)
               "Each customer receives a latent purchase intensity and a latent churn rate, hence an exponential lifetime; orders follow a non-homogeneous Poisson process modulated by realistic seasonality (sales periods, the August trough, Black Friday, the post-Christmas collapse). As a result churn is genuinely predictable from RFM variables alone, with no column containing the answer. ~1.5% of quality anomalies are injected on purpose — duplicate keys, negative quantities, zero prices, orphan SKUs, future timestamps — and 2,095 rows end up in quarantine.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/retailpulse-analytics",
+    demo: "https://imadelkhelyfy-retailpulse-analytics-app-9tammt.streamlit.app/"
+  },
 
   context: {
     secteur: T("E-commerce européen multi-catégories — Nova Retail (entreprise fictive)",
@@ -2690,7 +2693,10 @@ reorder_point    = mean_demand * effective_lead + safety_stock
               "Defects are injected on purpose: 75 exact duplicates, 125 duplicates on id_commande, ~4,000 missing values, prices stored as text (“135,84 €”), mixed date formats and stray whitespace. The Excel variant spreads the same data across three sheets with two title rows above the headers, to exercise the sheet selector and the “header row” option.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/data-cleaning-studio",
+    demo: "https://imadelkhelyfy-data-cleaning-studio-app-jnydlt.streamlit.app/"
+  },
 
   context: {
     secteur: T("Outillage interne — préparation et analyse de données tabulaires",

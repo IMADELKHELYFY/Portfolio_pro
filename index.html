@@ -286,7 +286,7 @@
         <!-- Visuels des 7 projets data, injectés par case-view.js -->
         <div id="case-visuals" style="display:contents"></div>
 
-        <figure class="visual" data-visual="eventbot">
+        <figure class="visual has-case" data-visual="eventbot" style="--case-light:#1F67A5;--case-dark:#4C8CCE">
           <svg viewBox="0 0 400 300" class="h-full w-full">
             <g font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">
               <rect x="26"  y="120" width="76" height="46" rx="4" fill="rgb(var(--c-elev))" stroke="rgb(var(--c-line))" />
@@ -308,7 +308,7 @@
         </figure>
 
         <!-- 4 · EduChatbot -->
-        <figure class="visual" data-visual="educhatbot">
+        <figure class="visual has-case" data-visual="educhatbot" style="--case-light:#1F67A5;--case-dark:#4C8CCE">
           <svg viewBox="0 0 400 300" class="h-full w-full">
             <g font-family="JetBrains Mono, monospace" font-size="9">
               <rect x="52" y="54" width="180" height="30" rx="6" fill="rgb(var(--c-elev))" />
@@ -338,7 +338,7 @@
       <!-- Étapes des 7 projets data, injectées par case-view.js -->
       <div id="case-steps" style="display:contents"></div>
 
-      <article class="step" data-step="eventbot">
+      <article class="step has-case" data-step="eventbot" style="--case-light:#1F67A5;--case-dark:#4C8CCE">
         <p class="step-index" data-i18n="step3.index">projet 08</p>
         <h3 class="step-title" data-i18n="step3.title">Intelligent Event Bot</h3>
         <p class="step-body" data-i18n="step3.body1">
@@ -354,9 +354,10 @@
         <div class="step-tags">
           <span class="tag">n8n</span><span class="tag">Gemini AI</span><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">REST</span>
         </div>
+        <a class="step-cta" href="https://github.com/IMADELKHELYFY/n8n-event-bot" target="_blank" rel="noopener" data-i18n="ui.codeGithub">Voir le code sur GitHub</a>
       </article>
 
-      <article class="step" data-step="educhatbot">
+      <article class="step has-case" data-step="educhatbot" style="--case-light:#1F67A5;--case-dark:#4C8CCE">
         <p class="step-index" data-i18n="step4.index">projet 09</p>
         <h3 class="step-title" data-i18n="step4.title">EduChatbot — mentor IA</h3>
         <p class="step-body" data-i18n="step4.body1">
@@ -372,6 +373,8 @@
         <div class="step-tags">
           <span class="tag">Gemini AI</span><span class="tag">Streamlit</span><span class="tag">Python</span><span class="tag">LLM</span>
         </div>
+        <a class="step-cta" href="https://github.com/IMADELKHELYFY/EduChatbot" target="_blank" rel="noopener" data-i18n="ui.codeGithub">Voir le code sur GitHub</a>
+        <a class="step-cta" href="https://imadelkhelyfy-educhatbot-main-4z5d3d.streamlit.app/" target="_blank" rel="noopener" data-i18n="ui.demoLive">Voir la démonstration</a>
       </article>
 
 
