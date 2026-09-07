@@ -438,8 +438,11 @@
         + PLAY + " " + esc(t("ui.demo")) + "</a>";
     }
 
+    // L'hebergement gratuit endort les applications : sans avertissement,
+    // un visiteur croit a une page cassee et referme l'onglet.
     var body = buttons
       ? '<div class="link-row">' + buttons + "</div>"
+        + '<p class="wake-note">' + esc(t("ui.wakeNote")) + "</p>"
       : '<p class="link-none">' + esc(t("ui.repoSoon")) + "</p>";
 
     return sec(10, '<div class="rv">' + body
