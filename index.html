@@ -127,14 +127,13 @@
 
 <!-- ══════════════════ HERO ══════════════════ -->
 <!-- Page de couverture : toujours sombre, indépendante du thème. -->
-<section id="hero" class="hero-dark">
+<section id="hero" class="hero">
 
-  <!-- Faisceau : quatre calques CSS, aucune image -->
+  <!-- Le rai de lumiere : trois calques CSS, aucune image -->
   <div class="hero-beam" aria-hidden="true">
     <span class="beam-glow"></span>
     <span class="beam-core"></span>
     <span class="beam-floor"></span>
-    <span class="beam-spark"></span>
   </div>
 
   <div class="hero-inner">
@@ -143,15 +142,15 @@
     <h1 class="hero-title hero-rise">Imad EL KHELYFY</h1>
 
     <p class="hero-lead hero-rise" data-i18n="hero.lead">
-      Je transforme des données brutes en décisions.
-      Pipelines fiables, modèles évalués honnêtement, restitutions lisibles —
-      de l'ingestion jusqu'au chiffre qu'on présente en réunion.
+      Je transforme des donnees brutes en decisions.
+      Pipelines fiables, modeles evalues honnetement, restitutions lisibles &mdash;
+      de l'ingestion jusqu'au chiffre qu'on presente en reunion.
     </p>
 
     <div class="hero-chips hero-rise">
       <span class="hero-chip">Data Analyst</span>
       <span class="hero-chip">Data Engineer</span>
-      <span class="hero-chip" data-i18n="hero.chip3">IA générative</span>
+      <span class="hero-chip" data-i18n="hero.chip3">IA generative</span>
     </div>
 
     <div class="hero-actions hero-rise">
@@ -163,10 +162,21 @@
     </div>
   </div>
 
-  <!-- La capture est posée dans la lumière du faisceau -->
-  <div class="hero-shot hero-rise">
-    <img src="assets/img/shots/retailpulse/01-vue-ensemble.webp"
-         alt="RetailPulse Analytics — vue d'ensemble" width="1600" height="1000" />
+  <!-- Sommaire de couverture : les cinq sections lues d'un coup -->
+  <div class="hero-toc hero-rise">
+    <div class="hero-toc__rule">
+      <nav class="hero-toc__list">
+        <a class="toc-item" href="#parcours"><span class="toc-item__no">01</span><span data-i18n="nav.parcours">parcours</span></a>
+        <a class="toc-item" href="#projets"><span class="toc-item__no">02</span><span data-i18n="nav.projets">projets</span></a>
+        <a class="toc-item" href="#stack"><span class="toc-item__no">03</span><span data-i18n="nav.stack">competences</span></a>
+        <a class="toc-item" href="#certifications"><span class="toc-item__no">04</span><span data-i18n="nav.certs">certifications</span></a>
+        <a class="toc-item" href="#contact"><span class="toc-item__no">05</span><span data-i18n="nav.contact">contact</span></a>
+      </nav>
+      <p class="hero-scroll">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        <span data-i18n="hero.scroll">faire defiler</span>
+      </p>
+    </div>
   </div>
 </section>
 

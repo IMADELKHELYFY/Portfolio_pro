@@ -1,40 +1,66 @@
 /* ===========================================================================
    Portfolio — Imad EL KHELYFY
-   Hero « faisceau » — une page de couverture cinématographique posée devant
-   le reste du site, qui garde son papier crème.
+   Hero — la page de couverture du cahier.
 
-   Le hero est volontairement TOUJOURS sombre, quel que soit le thème : c'est
-   une couverture, pas une section de contenu. Il ne consomme donc aucun
-   jeton de tokens.css, ses couleurs sont écrites en dur ici.
+   Le principe emprunté à la référence est le rai de lumière vertical, mais
+   il est réinterprété dans l'idiome du site : ici ce n'est pas une enseigne
+   néon sur fond noir, c'est un faisceau qui tombe sur une feuille. La
+   réglure du papier reste visible au travers, et tout est piloté par les
+   jetons de tokens.css — la couverture suit donc le thème comme le reste
+   de la page, au lieu de rester sombre en permanence.
 
-   Le faisceau est construit en quatre calques CSS superposés, sans image :
-     .beam-glow    la halo bleu, large et flou
-     .beam-core    le trait blanc net au centre
-     .beam-floor   l'évasement horizontal au point d'impact
-     .beam-spark   le point chaud, là où les deux se rejoignent
+   Le faisceau est fait de trois calques CSS, sans image :
+     .beam-glow   le halo, large et flou, qui porte la couleur
+     .beam-core   le trait net au centre
+     .beam-floor  l'évasement au point d'impact, sur le sommaire
    =========================================================================== */
 
-.hero-dark {
+.hero {
   position: relative;
   overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #05050a;
-  isolation: isolate;
-  /* Passe devant le filet de marge du cahier (body::before, z-index 1) :
-     la couverture doit être un bloc opaque, pas une page réglée. */
-  z-index: 2;
+
+  /* Réglages du faisceau — thème papier.
+     Sur crème, la lumière doit rester une teinte, pas une lueur : au-delà
+     de ~0.3 d'opacité elle vire au bleu plastique et casse le papier. */
+  --beam-tint:    var(--c-brand-500);
+  --beam-warm:    255 252 244;
+  --beam-a-mid:   0.13;
+  --beam-a-low:   0.26;
+  --beam-core-a:  0.30;
+  --beam-floor-a: 0.16;
+  --beam-blur:    58px;
+  --hero-grain:   0.05;
+  --btn-glow:     0 2px 0 rgb(var(--c-brand-600));
+  --btn-glow-h:   0 4px 0 rgb(var(--c-brand-600));
 }
 
-/* Léger grain : sans lui, les dégradés très étirés font des bandes. */
-.hero-dark::after {
+/* Sous la lampe, le même faisceau peut redevenir franchement lumineux. */
+html[data-theme="dark"] .hero {
+  --beam-tint:    140 178 240;
+  --beam-warm:    255 255 255;
+  --beam-a-mid:   0.34;
+  --beam-a-low:   0.72;
+  --beam-core-a:  0.85;
+  --beam-floor-a: 0.42;
+  --beam-blur:    46px;
+  --hero-grain:   0.14;
+  --btn-glow:     0 0 0 1px rgb(var(--c-brand-400) / 0.35),
+                  0 10px 32px -10px rgb(var(--c-brand-400) / 0.75);
+  --btn-glow-h:   0 0 0 1px rgb(var(--c-brand-300) / 0.5),
+                  0 16px 40px -10px rgb(var(--c-brand-400) / 0.95);
+}
+
+/* Grain léger : sans lui, les dégradés très étirés font des bandes. */
+.hero::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: var(--hero-grain);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
 
@@ -52,73 +78,54 @@
 
 .beam-glow,
 .beam-core,
-.beam-floor,
-.beam-spark {
+.beam-floor {
   position: absolute;
-  left: var(--beam-left, 68%);
+  left: var(--beam-left, 70%);
   transform: translateX(-50%);
 }
 
-/* Halo bleu — c'est lui qui donne la couleur. */
 .beam-glow {
-  top: -6%;
-  width: 190px;
-  height: 72%;
+  top: -8%;
+  width: 210px;
+  height: 82%;
   border-radius: 50%;
   background: linear-gradient(to bottom,
-              rgba(88, 96, 255, 0) 0%,
-              rgba(96, 108, 255, 0.55) 45%,
-              rgba(150, 170, 255, 0.9) 88%,
-              rgba(255, 255, 255, 0.95) 100%);
-  filter: blur(46px);
-  opacity: 0.85;
-  animation: beam-breathe 7s ease-in-out infinite;
+              rgb(var(--beam-tint) / 0) 0%,
+              rgb(var(--beam-tint) / var(--beam-a-mid)) 46%,
+              rgb(var(--beam-tint) / var(--beam-a-low)) 84%,
+              rgb(var(--beam-warm) / var(--beam-a-low)) 100%);
+  filter: blur(var(--beam-blur));
+  animation: beam-breathe 8s ease-in-out infinite;
 }
 
-/* Trait net au centre du halo. */
 .beam-core {
   top: 0;
-  width: 3px;
-  height: 70%;
+  width: 2px;
+  height: 80%;
   background: linear-gradient(to bottom,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(190, 200, 255, 0.55) 40%,
-              rgba(255, 255, 255, 0.98) 100%);
-  filter: blur(1.2px);
+              rgb(var(--beam-tint) / 0) 0%,
+              rgb(var(--beam-tint) / calc(var(--beam-core-a) * 0.55)) 42%,
+              rgb(var(--beam-tint) / var(--beam-core-a)) 88%,
+              rgb(var(--beam-tint) / 0) 100%);
+  filter: blur(1px);
 }
 
-/* Évasement au point d'impact : une ellipse très large et très floue.
-   C'est ce calque qui fait « poser » le faisceau sur le dashboard. */
+/* L'évasement tombe sur le sommaire : c'est lui qui « éclaire » le bas. */
 .beam-floor {
-  top: 62%;
-  width: min(1900px, 160vw);
-  height: 380px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center,
-              rgba(255, 255, 255, 0.95) 0%,
-              rgba(150, 165, 255, 0.55) 22%,
-              rgba(70, 82, 240, 0.30) 45%,
-              rgba(40, 46, 160, 0.10) 68%,
-              transparent 80%);
-  filter: blur(34px);
-}
-
-/* Point chaud, tout petit et très lumineux. */
-.beam-spark {
   top: 66%;
-  width: 300px;
-  height: 110px;
+  width: min(1600px, 145vw);
+  height: 340px;
   border-radius: 50%;
   background: radial-gradient(ellipse at center,
-              rgba(255, 255, 255, 1) 0%,
-              rgba(200, 210, 255, 0.7) 40%,
-              transparent 72%);
-  filter: blur(16px);
-  animation: beam-breathe 7s ease-in-out infinite reverse;
+              rgb(var(--beam-warm) / var(--beam-floor-a)) 0%,
+              rgb(var(--beam-tint) / calc(var(--beam-floor-a) * 0.8)) 26%,
+              rgb(var(--beam-tint) / calc(var(--beam-floor-a) * 0.35)) 52%,
+              transparent 78%);
+  filter: blur(40px);
 }
 
 @keyframes beam-breathe {
-  0%, 100% { opacity: 0.8;  }
+  0%, 100% { opacity: 0.82; }
   50%      { opacity: 1;    }
 }
 
@@ -130,7 +137,7 @@
   width: 100%;
   max-width: 1152px;
   margin: 0 auto;
-  padding: 22vh 20px 0;
+  padding: 21vh 20px 0;
   flex: 1;
 }
 
@@ -139,32 +146,42 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.24em;
-  color: rgba(160, 172, 255, 0.85);
+  color: rgb(var(--c-brand-500));
 }
 
-/* Titre en sans géométrique, dégradé blanc vers gris — comme la référence. */
+/* Le titre garde la serif du site : c'est un nom sur une couverture, pas
+   un logotype de SaaS. Le dégradé reste, mais en encre. */
 .hero-title {
-  margin-top: 22px;
-  max-width: 15ch;
-  font-family: Inter, system-ui, "Segoe UI", sans-serif;
-  font-size: clamp(40px, 6.4vw, 80px);
-  font-weight: 500;
-  line-height: 1.06;
-  letter-spacing: -0.035em;
-  background: linear-gradient(180deg, #ffffff 0%, #b9bcc9 78%);
+  margin-top: 20px;
+  max-width: 16ch;
+  font-size: clamp(42px, 7vw, 86px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  background: linear-gradient(178deg,
+              rgb(var(--c-fg-strong)) 0%,
+              rgb(var(--c-fg-2)) 96%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.hero-lead {
+/* Petit trait sous le titre, comme un soulignement à la règle. */
+.hero-title::after {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 2px;
   margin-top: 26px;
-  max-width: 46ch;
-  font-family: Inter, system-ui, "Segoe UI", sans-serif;
+  background: rgb(var(--c-brand-500));
+}
+
+.hero-lead {
+  margin-top: 24px;
+  max-width: 52ch;
   font-size: clamp(15px, 1.4vw, 18px);
-  font-weight: 300;
-  line-height: 1.65;
-  color: rgba(196, 201, 216, 0.92);
+  line-height: 1.7;
+  color: rgb(var(--c-fg-2));
 }
 
 .hero-chips {
@@ -175,140 +192,143 @@
 }
 
 .hero-chip {
-  padding: 6px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  padding: 5px 12px;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
   font-family: "Courier Prime", monospace;
   font-size: 11.5px;
-  color: rgba(206, 211, 226, 0.9);
+  color: rgb(var(--c-fg-2));
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 34px;
+  margin-top: 32px;
 }
 
-/* Bouton pilule avec sa lueur, l'élément signature de la référence. */
+/* Bouton « tampon » : angles nets comme le reste du site, et une ombre
+   pleine plutôt qu'un flou — l'idée d'encre appuyée sur le papier. */
 .hero-btn {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 13px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  background: linear-gradient(180deg, #6b6bff 0%, #4a45e8 100%);
-  box-shadow: 0 0 0 1px rgba(120, 120, 255, 0.35),
-              0 10px 34px -8px rgba(90, 90, 255, 0.85);
-  font-family: Inter, system-ui, sans-serif;
-  font-size: 14.5px;
-  font-weight: 500;
+  padding: 11px 22px;
+  border: 1px solid rgb(var(--c-brand-600));
+  background: rgb(var(--c-brand-500));
+  box-shadow: var(--btn-glow);
+  font-family: "Courier Prime", monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: #fff;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hero-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(140, 140, 255, 0.5),
-              0 16px 44px -8px rgba(90, 90, 255, 1);
+  box-shadow: var(--btn-glow-h);
 }
 
 .hero-btn--ghost {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: none;
-  color: rgba(226, 230, 242, 0.95);
+  border-color: rgb(var(--c-line-hard));
+  background: rgb(var(--c-surface));
+  box-shadow: 0 2px 0 rgb(var(--c-line));
+  color: rgb(var(--c-fg-1));
 }
 
-.hero-btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
-}
+.hero-btn--ghost:hover { box-shadow: 0 4px 0 rgb(var(--c-line)); }
 
-/* ══════════════ La capture, posée dans la lumière ═══════════════════════ */
+/* ══════════════ Le sommaire de couverture ═══════════════════════════════ */
 
-.hero-shot {
+/* Remplace la capture de la référence. Une couverture de cahier porte un
+   sommaire, pas une capture d'écran : c'est aussi le seul endroit du site
+   où les cinq sections se lisent d'un coup. */
+.hero-toc {
   position: relative;
-  z-index: 1;
-  width: min(1180px, 92vw);
-  margin: 8vh auto 0;
-  border-radius: 10px 10px 0 0;
-  overflow: hidden;
-  /* Le liseré clair du haut simule la lumière qui frappe le bord. */
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
-              0 -20px 70px -20px rgba(110, 120, 255, 0.6);
-}
-
-.hero-shot img {
-  display: block;
+  z-index: 2;
   width: 100%;
-  height: auto;
+  max-width: 1152px;
+  margin: 7vh auto 0;
+  padding: 0 20px 46px;
 }
 
-/* Le bas de la capture se fond dans le noir plutôt que d'être coupé net. */
-.hero-shot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 55%, #05050a 100%);
-  pointer-events: none;
+.hero-toc__rule {
+  border-top: 1px solid rgb(var(--c-line));
+  padding-top: 18px;
+}
+
+.hero-toc__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+  gap: 2px 0;
+}
+
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 11px 14px 11px 0;
+  border-bottom: 1px solid transparent;
+  font-family: "Courier Prime", monospace;
+  font-size: 13px;
+  color: rgb(var(--c-fg-2));
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.toc-item:hover {
+  color: rgb(var(--c-brand-500));
+  border-bottom-color: rgb(var(--c-brand-500));
+}
+
+.toc-item__no {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: rgb(var(--c-fg-4));
+}
+
+.toc-item:hover .toc-item__no { color: rgb(var(--c-brand-500)); }
+
+.hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 26px;
+  font-family: "Courier Prime", monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgb(var(--c-fg-4));
+}
+
+.hero-scroll svg { animation: scroll-nudge 2.4s ease-in-out infinite; }
+
+@keyframes scroll-nudge {
+  0%, 100% { transform: translateY(0);   }
+  50%      { transform: translateY(4px); }
 }
 
 /* Apparition au chargement, pilotée par le JS. */
 html.js .hero-rise {
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 0.9s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(24px);
+  transition: opacity 0.85s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html.js .hero-rise.is-up { opacity: 1; transform: none; }
 
-/* ══════════════ La barre de navigation par-dessus le hero ═══════════════ */
-
-header.is-over-hero {
-  background: transparent;
-  border-bottom-color: transparent;
-  backdrop-filter: none;
-}
-
-header.is-over-hero .nav-link { color: rgba(198, 204, 220, 0.82); }
-header.is-over-hero .nav-link:hover { color: #fff; border-bottom-color: rgba(255, 255, 255, 0.4); }
-header.is-over-hero .nav-link.is-current { color: #fff; border-bottom-color: #7b7bff; }
-
-header.is-over-hero .seg,
-header.is-over-hero .seg-solo {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-header.is-over-hero .seg-btn { color: rgba(198, 204, 220, 0.8); }
-header.is-over-hero .seg-btn.is-on { background: #5a55f0; color: #fff; }
-header.is-over-hero .seg-solo { color: rgba(198, 204, 220, 0.85); }
-
-header.is-over-hero .nav-brand { color: #fff; }
-header.is-over-hero .nav-brand .dot { color: #8b8bff; }
-
-/* Le bouton contact devient la pilule de la référence. */
-header.is-over-hero .nav-contact {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: linear-gradient(180deg, #6b6bff 0%, #4a45e8 100%);
-  box-shadow: 0 8px 24px -8px rgba(90, 90, 255, 0.9);
-  color: #fff;
-}
-
 /* ══════════════ Adaptations ═════════════════════════════════════════════ */
 
 @media (max-width: 720px) {
-  .hero-inner { padding-top: 17vh; }
-  .beam-glow  { width: 130px; }
-  .beam-floor { height: 200px; }
-  .hero-shot  { margin-top: 6vh; }
+  .hero-inner  { padding-top: 16vh; }
+  .beam-glow   { width: 140px; }
+  .beam-floor  { height: 220px; }
+  .hero-toc    { margin-top: 5vh; }
+  .hero-title::after { margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .beam-glow, .beam-spark { animation: none; }
+  .beam-glow, .hero-scroll svg { animation: none; }
   .hero-beam { transition: none; }
   html.js .hero-rise,
   html.js .hero-rise.is-up { opacity: 1; transform: none; transition: none; }

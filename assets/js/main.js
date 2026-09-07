@@ -160,12 +160,11 @@
 
 
   /* --- Hero « faisceau » ----------------------------------------------------
-     Trois comportements, tous optionnels : si la section n'existe pas, rien
+     Deux comportements, tous optionnels : si la section n'existe pas, rien
      ne s'exécute et le reste de la page fonctionne à l'identique.           */
 
   const hero = document.getElementById("hero");
   const beam = document.querySelector(".hero-beam");
-  const header = document.querySelector("header");
 
   if (hero) {
     // 1. Apparition en cascade au chargement.
@@ -186,19 +185,6 @@
         const ratio = e.clientX / window.innerWidth - 0.5;
         beam.style.setProperty("--beam-x", (ratio * 34).toFixed(1) + "px");
       }, { passive: true });
-    }
-
-    // 3. La barre de navigation devient transparente et claire tant qu'elle
-    //    est au-dessus du hero, puis reprend son habillage papier.
-    if (header) {
-      const syncHeader = () => {
-        // On compare le bas du hero a la hauteur de la barre : le nav reste
-        // clair tant qu'il a du noir derriere lui, pas une ligne de plus.
-        const over = hero.getBoundingClientRect().bottom > header.offsetHeight;
-        header.classList.toggle("is-over-hero", over);
-      };
-      window.addEventListener("scroll", syncHeader, { passive: true });
-      syncHeader();
     }
   }
 
