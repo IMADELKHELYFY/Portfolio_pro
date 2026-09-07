@@ -60,7 +60,10 @@ window.CASES = [
               "Five injected profiles: stable (745), silent_decline (445, the target case), new_customer (306), classic_churn (276, of which 25% are abrupt exits) and volatile (228, the false-positive trap). The profile column is ground truth: it is used to measure false positives, the engine never reads it.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/invisible-churn-detector",
+    demo: "https://invisible-churn-detector.onrender.com"
+  },
 
   context: {
     secteur: T("Abonnement B2C — service en ligne à facturation récurrente",
@@ -493,7 +496,10 @@ and theme. Adding a language touches not one line of statistics.`)
               "Amounts drawn from a log-normal law calibrated per category, volumes drawn from a Poisson law so that total volume can genuinely fall. The first five months serve as the volatility baseline; the last one takes concentrated shocks (in-store electronics) plus offsetting growth on digital. Uniform noise would have proved nothing.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/revenue-drop-diagnostic-engine",
+    demo: "https://revenue-drop-diagnostic-engine.onrender.com"
+  },
 
   context: {
     secteur: T("Distribution multi-canal — enseigne de détail canadienne",
@@ -913,7 +919,10 @@ else:
               "The generator simulates structured demand (pair-level baseline, day-of-week profile, per-SKU trend, seasonal wave by category, promotions, Poisson noise), a weekly replenishment policy, then injects supplier delays of 3 to 14 days. Five store × category pairs are made chronic (risk × 2.6) and fourteen stockouts are left open on the final day. latent_demand is ground truth: used for quality control, never read by the engine.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/inventory-lost-sales-detector",
+    demo: "https://inventory-lost-sales-detector.onrender.com"
+  },
 
   context: {
     secteur: T("Distribution alimentaire et biens de grande consommation",
@@ -1339,7 +1348,10 @@ score = (0.45 * pct(impact)       # lost revenue over the period
               "Propensities are not random: they derive from the profile through logistic scores, which makes every recommendation explainable. Three correlations reproduce real dynamics — the over-contacting bias (contacts rise with income and engagement), response erosion (−1.35 points per recent contact) and the implicit opt-out of very disengaged customers.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/marketing-contact-fatigue-optimizer",
+    demo: "https://marketing-contact-fatigue-optimizer.onrender.com"
+  },
 
   context: {
     secteur: T("Banque de détail — trois produits : épargne, carte de crédit, prêt",
@@ -1769,7 +1781,10 @@ assets/custom.css contains no hard-coded colour value.`)
               "The generator is not noise: it encodes dynamics the model has to recover — negative sentiment (weight 2.35), Refund (+1.05), each past escalation (+0.80), team silence (+0.045 per hour), agent seniority (−0.009 per month), plus three interactions. The intercept is calibrated by bisection to reach a baseline escalation rate of 19%, consistent with a real B2C queue.")
   },
 
-  links: { repo: "", demo: "" },
+  links: {
+    repo: "https://github.com/IMADELKHELYFY/support-escalation-predictor",
+    demo: "https://support-escalation-predictor.onrender.com"
+  },
 
   context: {
     secteur: T("Support client B2C — file de tickets multi-canal",
