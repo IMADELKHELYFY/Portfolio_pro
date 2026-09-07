@@ -239,11 +239,12 @@ html[data-theme="dark"] .hero {
 
 .hero-btn--ghost:hover { box-shadow: 0 4px 0 rgb(var(--c-line)); }
 
-/* ══════════════ Le sommaire de couverture ═══════════════════════════════ */
+/* ══════════════ Le pied de couverture ═══════════════════════════════════ */
 
-/* Remplace la capture de la référence. Une couverture de cahier porte un
-   sommaire, pas une capture d'écran : c'est aussi le seul endroit du site
-   où les cinq sections se lisent d'un coup. */
+/* La reference posait une capture de produit ici. Le menu de l'en-tete
+   couvrant deja les sections, il ne reste qu'un filet et le repere de
+   defilement : la couverture respire, et la lumiere du faisceau tombe sur
+   du vide plutot que sur un doublon du menu. */
 .hero-toc {
   position: relative;
   z-index: 2;
@@ -258,42 +259,10 @@ html[data-theme="dark"] .hero {
   padding-top: 18px;
 }
 
-.hero-toc__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
-  gap: 2px 0;
-}
-
-.toc-item {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 11px 14px 11px 0;
-  border-bottom: 1px solid transparent;
-  font-family: "Courier Prime", monospace;
-  font-size: 13px;
-  color: rgb(var(--c-fg-2));
-  transition: color 0.18s ease, border-color 0.18s ease;
-}
-
-.toc-item:hover {
-  color: rgb(var(--c-brand-500));
-  border-bottom-color: rgb(var(--c-brand-500));
-}
-
-.toc-item__no {
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  color: rgb(var(--c-fg-4));
-}
-
-.toc-item:hover .toc-item__no { color: rgb(var(--c-brand-500)); }
-
 .hero-scroll {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-top: 26px;
   font-family: "Courier Prime", monospace;
   font-size: 10.5px;
   text-transform: uppercase;

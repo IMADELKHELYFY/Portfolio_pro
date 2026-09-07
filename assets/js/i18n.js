@@ -140,7 +140,6 @@ fr: {
   "langues.title": "Langues",
   "lg1.name": "Français", "lg1.level": "C1",
   "lg2.name": "Anglais",  "lg2.level": "C1",
-  "lg3.name": "Arabe",    "lg3.level": "natif",
   "lg4.name": "Allemand", "lg4.level": "notions",
 
   "contact.label": "05 — contact",
@@ -354,7 +353,6 @@ en: {
   "langues.title": "Languages",
   "lg1.name": "French",  "lg1.level": "C1",
   "lg2.name": "English", "lg2.level": "C1",
-  "lg3.name": "Arabic",  "lg3.level": "native",
   "lg4.name": "German",  "lg4.level": "basics",
 
   "contact.label": "05 — contact",
