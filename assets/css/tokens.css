@@ -1,0 +1,170 @@
+/* ===========================================================================
+   Portfolio — Imad EL KHELYFY
+   Jetons de couleur. Source unique de vérité pour les deux thèmes.
+
+   Parti pris : papier. Fond crème légèrement chaud, réglure horizontale
+   discrète, filet de marge à gauche comme sur un cahier, et une encre
+   bleue pour tous les accents. Aucun dégradé, aucune lueur, aucun angle
+   très arrondi — on imite une feuille imprimée, pas une interface.
+
+   Les valeurs sont des triplets RGB **sans** fonction `rgb()` : c'est ce qui
+   permet à Tailwind d'appliquer ses modificateurs d'opacité
+   (`border-line/70`, `bg-brand-500/10`) via son placeholder `<alpha-value>`.
+
+   Le thème est porté par `data-theme` sur <html>, posé avant le premier rendu
+   par le script inline de l'en-tête — sinon la page clignoterait.
+   =========================================================================== */
+
+/* ══════════════ Papier — thème par défaut ══════════════════════════════ */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --c-bg:         243 238 228;   /* la feuille                    */
+  --c-deep:       234 227 213;   /* blocs de code, encadrés creux */
+  --c-surface:    251 248 241;   /* fiche collée sur la feuille   */
+  --c-raised:     239 233 221;
+  --c-elev:       232 225 210;
+
+  /* Traits */
+  --c-line:       206 195 175;
+  --c-line-soft:  222 213 196;
+  --c-line-hard:  170 156 132;
+  --c-rule:       198 186 164;   /* réglure horizontale           */
+  --c-margin:     44 100 156;    /* filet de marge, bleu encre    */
+
+  /* Encre */
+  --c-fg-strong:  28 25 21;
+  --c-fg-1:       54 49 42;
+  --c-fg-2:       94 86 74;
+  --c-fg-3:       128 117 100;
+  --c-fg-4:       158 145 125;
+
+  /* Accent — encre bleue */
+  --c-brand-300:  26 78 121;
+  --c-brand-400:  25 90 143;
+  --c-brand-500:  31 103 165;
+  --c-brand-600:  20 68 110;
+
+  /* Coloration syntaxique — encres de machine à écrire */
+  --c-code-fg:      48 50 56;
+  --c-code-comment: 126 130 138;
+  --c-code-string:  26 108 78;
+  --c-code-key:     28 84 148;
+  --c-code-num:     152 104 24;
+  --c-code-fn:      22 110 130;
+
+  /* Badges de priorité */
+  --c-prio-high:  168 52 46;
+  --c-prio-mid:   146 104 24;
+  --c-prio-low:   58 106 92;
+
+  --rule-alpha:   0.5;
+  --shot-dim:     1;
+}
+
+/* ══════════════ Papier ancien, à la lampe ═════════════════════════════ */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-bg:         20 23 28;
+  --c-deep:       14 17 21;
+  --c-surface:    28 32 39;
+  --c-raised:     34 39 47;
+  --c-elev:       42 48 57;
+
+  --c-line:       55 62 73;
+  --c-line-soft:  41 47 56;
+  --c-line-hard:  86 96 111;
+  --c-rule:       48 55 65;
+  --c-margin:     92 130 178;
+
+  --c-fg-strong:  235 239 245;
+  --c-fg-1:       211 218 228;
+  --c-fg-2:       169 178 192;
+  --c-fg-3:       133 142 156;
+  --c-fg-4:       105 114 128;
+
+  --c-brand-300:  128 180 232;
+  --c-brand-400:  106 162 220;
+  --c-brand-500:  76 140 206;
+  --c-brand-600:  52 110 176;
+
+  --c-code-fg:      208 215 224;
+  --c-code-comment: 116 124 136;
+  --c-code-string:  134 190 150;
+  --c-code-key:     128 180 232;
+  --c-code-num:     206 176 108;
+  --c-code-fn:      126 198 200;
+
+  --c-prio-high:  214 116 108;
+  --c-prio-mid:   198 160 84;
+  --c-prio-low:   126 176 158;
+
+  --rule-alpha:   0.55;
+  --shot-dim:     0.9;
+}
+
+/* Le fond suit le thème même hors des zones peintes par Tailwind
+   (rebond de défilement, zone sous le pied de page). */
+html { background: rgb(var(--c-bg)); }
+
+/* ══════════════ La feuille ═════════════════════════════════════════════
+   Réglure horizontale de 32 px + filet de marge à gauche. Posée sur <body>
+   en `background-attachment: fixed` pour que les lignes restent alignées
+   d'une section à l'autre, sans se décaler au défilement.               */
+
+body {
+  background-color: rgb(var(--c-bg));
+  background-image:
+    linear-gradient(rgb(var(--c-rule) / var(--rule-alpha)) 1px, transparent 1px);
+  background-size: 100% 32px;
+  background-position: 0 -1px;
+  background-attachment: fixed;
+}
+
+/* Filet de marge : un seul trait vertical, aligné sur la grille de contenu. */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: max(20px, calc(50% - 560px));
+  width: 1px;
+  background: rgb(var(--c-margin) / 0.32);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  body::before { left: 14px; }
+}
+
+/* Transition douce à la bascule — jamais au chargement, sinon on voit le
+   thème initial se peindre. La classe est retirée par i18n.js. */
+html.theme-anim,
+html.theme-anim body,
+html.theme-anim .card,
+html.theme-anim .chip,
+html.theme-anim .tag,
+html.theme-anim .stat,
+html.theme-anim .cert,
+html.theme-anim .lang,
+html.theme-anim .case-reader,
+html.theme-anim .kpi,
+html.theme-anim .fw__col,
+html.theme-anim .fig,
+html.theme-anim .ins,
+html.theme-anim .annex,
+html.theme-anim .dl-card,
+html.theme-anim .code-block,
+html.theme-anim .matrix-wrap {
+  transition: background-color 0.28s ease, border-color 0.28s ease, color 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim, html.theme-anim * { transition: none !important; }
+}

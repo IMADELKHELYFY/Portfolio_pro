@@ -1,230 +1,206 @@
 /* ===========================================================================
    Portfolio — Imad EL KHELYFY
-   CSS pur (aucune directive Tailwind ici : le CDN Tailwind ne traite pas les
-   fichiers externes). Tailwind gère la mise en page dans le HTML ; ce fichier
-   gère les motifs de fond, les animations et les composants réutilisés.
+   Composants de la page. Les couleurs viennent toutes de tokens.css :
+   aucune valeur en dur ici, c'est ce qui fait tenir les deux thèmes.
 
-   Palette
-     fond        #08080A   surface #0C0C10   carte #1A1A22
-     bordure     #26262F
-     violet      #A99BFF (clair) · #8B7CFF · #7C5CFF · #5B3DF5 (foncé)
-     texte       #E4E4E7 (fort) · #A1A1AA · #71717A · #52525B (faible)
+   Idiome visuel : une feuille imprimée. Filets fins plutôt que cartes,
+   angles quasi droits, aucune ombre portée, aucun dégradé. La hiérarchie
+   se fait par la typographie et le blanc, pas par la profondeur.
+
+   Typographie
+     Lora          texte courant et titres (serif de labeur)
+     Courier Prime libellés, chiffres, code (machine à écrire)
    =========================================================================== */
-
-/* --- Motifs de fond -------------------------------------------------------- */
-
-.bg-dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-.bg-line-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 26px 26px;
-}
 
 /* --- Navigation ------------------------------------------------------------ */
 
 .nav-link {
   display: inline-block;
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
+  padding: 6px 9px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #71717A;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  letter-spacing: 0.1em;
+  color: rgb(var(--c-fg-3));
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  color: rgb(var(--c-fg-strong));
+  border-bottom-color: rgb(var(--c-line-hard));
 }
 
 .nav-link.is-current {
-  background: rgba(124, 92, 255, 0.12);
-  color: #A99BFF;
+  color: rgb(var(--c-brand-500));
+  border-bottom-color: rgb(var(--c-brand-500));
 }
 
-/* --- Titres de section ----------------------------------------------------- */
+/* --- Titres de section ------------------------------------------------------
+   Le libellé « 01 — repères » est composé comme un intitulé de dossier :
+   petites capitales espacées, suivies d'un filet qui court jusqu'au bord.  */
 
 .section-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.24em;
-  color: #8B7CFF;
+  letter-spacing: 0.22em;
+  color: rgb(var(--c-brand-500));
+}
+
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(var(--c-line));
 }
 
 /* --- Petits composants ----------------------------------------------------- */
 
 .chip {
   display: inline-block;
-  padding: 4px 10px;
-  border: 1px solid #26262F;
-  border-radius: 4px;
-  background: #1A1A22;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
-  color: #A1A1AA;
+  padding: 5px 11px;
+  border: 1px solid rgb(var(--c-line-hard));
+  background: transparent;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgb(var(--c-fg-2));
 }
 
 .tag {
   display: inline-block;
-  padding: 2px 6px;
-  border: 1px solid #26262F;
-  border-radius: 4px;
-  background: #1A1A22;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  line-height: 16px;
-  color: #A1A1AA;
+  padding: 2px 7px;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  font-family: "Courier Prime", monospace;
+  font-size: 11.5px;
+  line-height: 17px;
+  color: rgb(var(--c-fg-2));
 }
 
+/* La « carte » n'est pas une carte : c'est un encadré de dossier, filet fin
+   sur fond de fiche, avec un liseré d'accent à gauche au survol. */
 .card {
-  padding: 20px;
-  border: 1px solid #26262F;
-  border-radius: 6px;
-  background: #0C0C10;
-  transition: border-color 0.3s ease;
+  padding: 20px 22px;
+  border: 1px solid rgb(var(--c-line));
+  border-left: 2px solid rgb(var(--c-line-hard));
+  background: rgb(var(--c-surface));
+  transition: border-left-color 0.25s ease;
 }
 
-.card:hover {
-  border-color: rgba(124, 92, 255, 0.35);
-}
+.card:hover { border-left-color: rgb(var(--c-brand-500)); }
 
 .bullet {
   position: relative;
-  padding-left: 16px;
+  padding-left: 18px;
 }
 
 .bullet::before {
-  content: "";
+  content: "—";
   position: absolute;
   left: 0;
-  top: 9px;
-  width: 4px;
-  height: 4px;
-  border-radius: 999px;
-  background: #7C5CFF;
+  top: 0;
+  font-family: "Courier Prime", monospace;
+  color: rgb(var(--c-brand-500));
 }
 
 .btn-primary,
 .btn-ghost {
   display: inline-block;
-  padding: 10px 16px;
-  border-radius: 4px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 14px;
+  padding: 10px 18px;
+  font-family: "Courier Prime", monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-primary {
-  background: #7C5CFF;
-  color: #fff;
-  font-weight: 500;
+  border: 1px solid rgb(var(--c-brand-500));
+  background: rgb(var(--c-brand-500));
+  color: rgb(var(--c-surface));
+  font-weight: 700;
 }
 
-.btn-primary:hover {
-  background: #5B3DF5;
-}
+.btn-primary:hover { background: rgb(var(--c-brand-600)); border-color: rgb(var(--c-brand-600)); }
 
 .btn-ghost {
-  border: 1px solid #26262F;
-  background: #0C0C10;
-  color: #D4D4D8;
+  border: 1px solid rgb(var(--c-line-hard));
+  background: transparent;
+  color: rgb(var(--c-fg-1));
 }
 
-a.btn-ghost:hover {
-  border-color: rgba(124, 92, 255, 0.5);
-  color: #A99BFF;
-}
+a.btn-ghost:hover { border-color: rgb(var(--c-brand-500)); color: rgb(var(--c-brand-500)); }
 
-/* --- Repères chiffrés ------------------------------------------------------ */
+/* --- Repères chiffrés ------------------------------------------------------
+   Colonnes d'un relevé : le chiffre en tête, le libellé dessous, séparées
+   par un filet vertical plutôt que par des boîtes.                        */
 
 .stat {
-  padding: 20px;
-  border: 1px solid #26262F;
-  border-radius: 6px;
-  background: #0C0C10;
+  padding: 4px 20px 4px 0;
+  border-left: 1px solid rgb(var(--c-line));
+  padding-left: 20px;
 }
 
 .stat-value {
   display: block;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 30px;
-  font-weight: 600;
+  font-family: "Courier Prime", monospace;
+  font-size: 34px;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: #A99BFF;
+  color: rgb(var(--c-brand-500));
   font-variant-numeric: tabular-nums;
 }
 
 .stat-label {
   display: block;
   margin-top: 12px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #A1A1AA;
+  letter-spacing: 0.1em;
+  color: rgb(var(--c-fg-1));
 }
 
 .stat-note {
   display: block;
-  margin-top: 6px;
-  font-size: 12px;
+  margin-top: 5px;
+  font-size: 13px;
+  font-style: italic;
   line-height: 1.6;
-  color: #52525B;
+  color: rgb(var(--c-fg-3));
 }
 
 /* --- Frise du parcours ----------------------------------------------------- */
 
 .timeline-item {
   position: relative;
-  padding-left: 32px;
+  padding-left: 30px;
 }
 
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 12px;
+  left: 4px;
+  top: 14px;
   width: 1px;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(124, 92, 255, 0.45), transparent);
+  background: rgb(var(--c-line));
 }
 
-.timeline-item:last-child::before {
-  display: none;
-}
+.timeline-item:last-child::before { display: none; }
 
 .timeline-dot {
   position: absolute;
   left: 0;
   top: 12px;
-  width: 11px;
-  height: 11px;
-  border: 2px solid #7C5CFF;
-  border-radius: 999px;
-  background: #08080A;
-}
-
-.timeline-pulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: #7C5CFF;
-  animation: pulse-dot 2.2s ease-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%   { transform: scale(0.6); opacity: 0.9; }
-  70%  { transform: scale(2.4); opacity: 0; }
-  100% { transform: scale(2.4); opacity: 0; }
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgb(var(--c-brand-500));
+  background: rgb(var(--c-brand-500));
 }
 
 /* --- Formation ------------------------------------------------------------- */
@@ -235,24 +211,191 @@ a.btn-ghost:hover {
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  padding: 14px 16px;
-  border-bottom: 1px solid #26262F;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgb(var(--c-line));
 }
 
-.edu:last-child {
-  border-bottom: 0;
-}
+.edu:last-child { border-bottom: 0; }
 
 .edu-sub {
-  margin-top: 2px;
-  font-size: 12px;
-  color: #71717A;
+  margin-top: 3px;
+  font-size: 13px;
+  font-style: italic;
+  color: rgb(var(--c-fg-3));
 }
 
 .edu-date {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
+  color: rgb(var(--c-fg-3));
+}
+
+/* --- Fiche technique (stack) -----------------------------------------------
+   Libellé à gauche, outils à droite : la lecture se fait ligne par ligne,
+   comme un tableau de spécifications.                                      */
+
+.skills {
+  border-top: 1px solid rgb(var(--c-line));
+}
+
+.skill-row {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgb(var(--c-line));
+}
+
+@media (min-width: 760px) {
+  .skill-row {
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+    align-items: baseline;
+  }
+}
+
+.skill-key {
+  font-family: "Courier Prime", monospace;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgb(var(--c-fg-1));
+}
+
+.skill-val {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* --- Certifications, langues ------------------------------------------------ */
+
+/* --- En-tête d'expérience : logo, intitulé, date ---------------------------
+   Le logo reste petit et cadré : c'est un repère visuel, pas une illustration.
+   Fond blanc imposé — les logos d'entreprise sont dessinés pour du blanc.   */
+
+.exp-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.exp-logo {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 3px;
+  border: 1px solid rgb(var(--c-line));
+  background: #fff;
+}
+
+.exp-logo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.exp-head__text { flex: 1; min-width: 0; }
+
+.exp-employer {
+  margin-top: 3px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12.5px;
+  color: rgb(var(--c-brand-400));
+}
+
+.exp-date {
+  flex-shrink: 0;
+  padding-top: 2px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
+  color: rgb(var(--c-fg-3));
+  white-space: nowrap;
+}
+
+@media (max-width: 620px) {
+  .exp-head { flex-wrap: wrap; }
+  .exp-date { width: 100%; padding-left: 52px; }
+}
+
+/* --- Certifications --------------------------------------------------------
+   Le tampon typographique s'affiche par défaut ; si un fichier de logo est
+   déposé dans assets/img/certs/, l'image prend sa place au chargement.     */
+
+.cert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+}
+
+.cert-mark {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-elev));
+}
+
+.cert-mark i {
+  padding: 0 3px;
+  font-family: "Courier Prime", monospace;
+  font-size: 10.5px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-align: center;
+  color: rgb(var(--c-brand-500));
+}
+
+.cert-mark img { display: none; max-width: 100%; max-height: 100%; object-fit: contain; }
+.cert-mark.has-img { background: #fff; padding: 4px; }
+.cert-mark.has-img img { display: block; }
+.cert-mark.has-img i { display: none; }
+
+.cert-body { display: flex; flex-direction: column; min-width: 0; }
+
+.cert-issuer {
+  font-family: "Courier Prime", monospace;
   font-size: 11px;
-  color: #52525B;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--c-brand-500));
+}
+
+.cert-title {
+  margin-top: 5px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgb(var(--c-fg-1));
+}
+
+.lang {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  font-size: 14px;
+  color: rgb(var(--c-fg-1));
+}
+
+.lang-level {
+  font-family: "Courier Prime", monospace;
+  font-size: 11.5px;
+  color: rgb(var(--c-fg-3));
 }
 
 /* --- Scrollytelling : panneau visuel --------------------------------------- */
@@ -263,179 +406,158 @@ a.btn-ghost:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 14px;
   opacity: 0;
-  transform: scale(0.97);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
-.visual.is-active {
-  opacity: 1;
-  transform: scale(1);
-}
+.visual.is-active { opacity: 1; }
 
 /* Sans JS, aucun visuel ne serait activé : on affiche le premier. */
-html:not(.js) .visual:first-of-type {
-  opacity: 1;
-  transform: none;
-}
+html:not(.js) .visual:first-of-type { opacity: 1; }
 
 .svg-caption {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 9px;
-  fill: #52525B;
+  font-family: "Courier Prime", monospace;
+  font-size: 9.5px;
+  fill: rgb(var(--c-fg-3));
 }
 
 .svg-value {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Courier Prime", monospace;
   font-size: 26px;
   font-weight: 700;
-  fill: #A99BFF;
+  fill: rgb(var(--c-brand-500));
 }
 
+/* Les animations des schémas restent, mais discrètes. */
 .pulse-ring {
   transform-origin: 200px 150px;
-  animation: ring 2.6s ease-out infinite;
+  animation: ring 3s ease-out infinite;
 }
 
 @keyframes ring {
-  0%   { transform: scale(0.6); opacity: 0.8; }
-  100% { transform: scale(1.5); opacity: 0; }
+  0%   { transform: scale(0.7); opacity: 0.5; }
+  100% { transform: scale(1.4); opacity: 0; }
 }
 
-.flag-row {
-  animation: flag 2.4s ease-in-out infinite;
-}
+.flag-row { animation: flag 2.8s ease-in-out infinite; }
 
 @keyframes flag {
-  0%, 100% { stroke-opacity: 0.45; }
+  0%, 100% { stroke-opacity: 0.4; }
   50%      { stroke-opacity: 1; }
 }
 
 /* --- Scrollytelling : étapes ------------------------------------------------ */
 
 .step {
-  padding: 64px 0 64px 24px;
-  border-left: 1px solid #26262F;
-  transition: opacity 0.4s ease, border-color 0.4s ease;
+  padding: 56px 0 56px 26px;
+  border-left: 1px solid rgb(var(--c-line));
+  transition: opacity 0.35s ease, border-color 0.35s ease;
 }
 
-/* L'atténuation des étapes inactives n'a de sens que si le JS peut les rallumer. */
-html.js .step {
-  opacity: 0.4;
-}
+html.js .step { opacity: 0.42; }
 
 html.js .step.is-active {
   opacity: 1;
-  border-color: rgba(124, 92, 255, 0.6);
+  border-color: rgb(var(--c-brand-500));
 }
 
-.step:first-child {
-  padding-top: 24px;
-}
+.step:first-child { padding-top: 20px; }
 
 .step-index {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #8B7CFF;
+  letter-spacing: 0.18em;
+  color: rgb(var(--c-brand-500));
 }
 
 .step-title {
-  margin-top: 8px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #fff;
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: rgb(var(--c-fg-strong));
 }
 
 .step-body {
-  margin-top: 16px;
-  font-size: 14px;
-  line-height: 1.75;
-  color: #A1A1AA;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgb(var(--c-fg-2));
 }
 
 .step-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
 @media (min-width: 640px) {
-  .step-title { font-size: 24px; }
+  .step-title { font-size: 26px; }
   .step-body  { font-size: 16px; }
 }
 
-/* --- Stack, certifications, langues ---------------------------------------- */
+/* --- Commutateurs langue / thème ------------------------------------------- */
 
-.stack-group {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #71717A;
+.seg {
+  display: inline-flex;
+  border: 1px solid rgb(var(--c-line-hard));
+  background: rgb(var(--c-surface));
 }
 
-.stack-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
+.seg-btn {
+  padding: 5px 10px;
+  background: transparent;
+  font-family: "Courier Prime", monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgb(var(--c-fg-3));
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.cert {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 14px;
-  border: 1px solid #26262F;
-  border-radius: 4px;
-  background: #0C0C10;
+.seg-btn:hover { color: rgb(var(--c-fg-strong)); }
+
+.seg-btn.is-on {
+  background: rgb(var(--c-brand-500));
+  color: rgb(var(--c-surface));
 }
 
-.cert-issuer {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #8B7CFF;
-}
-
-.cert-title {
-  margin-top: 4px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #D4D4D8;
-}
-
-.lang {
-  display: flex;
+.seg-solo {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border: 1px solid #26262F;
-  border-radius: 4px;
-  background: #0C0C10;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  color: #D4D4D8;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  border: 1px solid rgb(var(--c-line-hard));
+  background: rgb(var(--c-surface));
+  color: rgb(var(--c-fg-2));
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
-.lang-level {
-  font-size: 10px;
-  color: #52525B;
+.seg-solo:hover { border-color: rgb(var(--c-brand-500)); color: rgb(var(--c-brand-500)); }
+
+/* Une seule icône visible : celle du thème vers lequel on bascule. */
+html[data-theme="dark"]  .i-moon { display: none; }
+html[data-theme="light"] .i-sun  { display: none; }
+
+@media (max-width: 700px) {
+  .reader-bar .seg,
+  .reader-bar .seg-solo { display: none; }
 }
 
 /* --- Apparition au défilement ---------------------------------------------- */
 
 html.js .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 html.js .reveal.is-visible {
@@ -448,41 +570,39 @@ html.js .reveal.is-visible {
 .scroll-cue {
   position: relative;
   display: block;
-  width: 16px;
-  height: 28px;
-  border: 1px solid #3F3F46;
-  border-radius: 999px;
+  width: 14px;
+  height: 24px;
+  border: 1px solid rgb(var(--c-line-hard));
 }
 
 .scroll-cue::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 6px;
-  width: 4px;
-  height: 6px;
-  border-radius: 999px;
-  background: #7C5CFF;
-  animation: cue 1.8s ease-in-out infinite;
+  top: 5px;
+  width: 3px;
+  height: 5px;
+  background: rgb(var(--c-brand-500));
+  animation: cue 2s ease-in-out infinite;
 }
 
 @keyframes cue {
   0%, 100% { transform: translate(-50%, 0); opacity: 1; }
-  50%      { transform: translate(-50%, 9px); opacity: 0.3; }
+  50%      { transform: translate(-50%, 8px); opacity: 0.25; }
 }
 
 /* --- Divers ---------------------------------------------------------------- */
 
 ::selection {
-  background: rgba(124, 92, 255, 0.3);
-  color: #fff;
+  background: rgb(var(--c-brand-500) / 0.22);
+  color: rgb(var(--c-fg-strong));
 }
 
 @media (min-width: 768px) {
-  ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #08080A; }
-  ::-webkit-scrollbar-thumb { background: #26262F; border-radius: 5px; }
-  ::-webkit-scrollbar-thumb:hover { background: #3A3A46; }
+  ::-webkit-scrollbar { width: 11px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--c-deep)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--c-line-hard)); }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-fg-4)); }
 }
 
 /* --- Respect des préférences d'animation ----------------------------------- */
@@ -499,18 +619,10 @@ html.js .reveal.is-visible {
 
   html.js .step { opacity: 1; }
 
-  .visual {
-    transition: opacity 0.2s linear;
-    transform: none;
-  }
+  .visual { transition: opacity 0.2s linear; }
 
-  .visual.is-active { transform: none; }
-
-  .timeline-pulse,
   .pulse-ring,
   .flag-row,
   .flow-dot,
-  .scroll-cue::after {
-    animation: none;
-  }
+  .scroll-cue::after { animation: none; }
 }
