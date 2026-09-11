@@ -25,6 +25,10 @@ fr: {
 
   "a11y.lang": "Langue",
   "a11y.theme": "Changer de thème",
+  "a11y.menu": "Ouvrir le menu",
+  "a11y.contact": "Contact",
+  "dock.mail": "Email",
+  "dock.call": "Appeler",
 
   "nav.parcours": "parcours",
   "nav.projets": "projets",
@@ -34,7 +38,7 @@ fr: {
   "nav.contact": "contact",
 
   "hero.eyebrow": "portfolio / data &amp; ia",
-  "hero.lead": "Je transforme des données brutes en décisions. Pipelines fiables, modèles évalués honnêtement, restitutions lisibles — de l'ingestion jusqu'au chiffre qu'on présente en réunion.",
+  "hero.lead": "Je construis des systèmes data et IA de bout en bout : des pipelines qui tiennent, des modèles évalués honnêtement, des applications LLM qui survivent à la production. Sept études de cas, code compris.",
   "hero.chip3": "IA générative",
   "hero.cta1": "Voir les projets",
   "hero.cta2": "Me contacter",
@@ -245,6 +249,10 @@ en: {
 
   "a11y.lang": "Language",
   "a11y.theme": "Switch theme",
+  "a11y.menu": "Open menu",
+  "a11y.contact": "Contact",
+  "dock.mail": "Email",
+  "dock.call": "Call",
 
   "nav.parcours": "background",
   "nav.projets": "projects",
@@ -254,7 +262,7 @@ en: {
   "nav.contact": "contact",
 
   "hero.eyebrow": "portfolio / data &amp; ai",
-  "hero.lead": "I turn raw data into decisions. Reliable pipelines, honestly evaluated models, readable deliverables — from ingestion all the way to the number you put in front of a committee.",
+  "hero.lead": "I build data and AI systems end to end: ingestion pipelines that hold, models evaluated honestly, LLM applications that survive production. Seven case studies, code included.",
   "hero.chip3": "Generative AI",
   "hero.cta1": "See the projects",
   "hero.cta2": "Get in touch",
@@ -453,7 +461,7 @@ en: {
   "use strict";
 
   var root = document.documentElement;
-  var LANG_KEY = "pf-lang";
+  var LANG_KEY = "pf-lang-2";   // v2 : l'anglais est desormais la langue par defaut
   var THEME_KEY = "pf-theme";
 
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }

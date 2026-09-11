@@ -36,6 +36,128 @@
   border-bottom-color: rgb(var(--c-brand-500));
 }
 
+/* --- Menu mobile -----------------------------------------------------------
+   Sous 1024 px la liste des sections disparait de la barre : sans ce panneau,
+   un visiteur arrive par QR code n'a aucun moyen d'atteindre une section
+   autrement qu'en faisant defiler toute la page.                            */
+
+.nav-burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 30px;
+  border: 1px solid rgb(var(--c-line-hard));
+  background: rgb(var(--c-surface));
+  color: rgb(var(--c-fg-1));
+  cursor: pointer;
+}
+
+.nav-burger__bars {
+  display: grid;
+  gap: 3.5px;
+  width: 15px;
+}
+
+.nav-burger__bars i {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+
+.nav-burger[aria-expanded="true"] { border-color: rgb(var(--c-brand-500)); color: rgb(var(--c-brand-500)); }
+.nav-burger[aria-expanded="true"] i:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] i:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+.mobile-menu {
+  border-top: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-bg));
+  padding: 10px 20px 18px;
+  max-height: calc(100dvh - 56px);
+  overflow-y: auto;
+}
+
+.mobile-menu[hidden] { display: none; }
+
+.mobile-menu__nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-menu__nav a {
+  display: block;
+  padding: 13px 2px;
+  border-bottom: 1px solid rgb(var(--c-line-soft));
+  font-family: "Courier Prime", monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--c-fg-1));
+}
+
+.mobile-menu__contact {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.mobile-menu__contact .hc { width: 100%; justify-content: center; }
+
+/* --- Barre d'action fixe (telephone) ---------------------------------------
+   Deux gestes a portee de pouce, ou que soit le lecteur dans la page. Masquee
+   des 768 px : sur grand ecran, la section contact suffit.                  */
+
+.dock { display: none; }
+
+@media (max-width: 767px) {
+  .dock {
+    position: fixed;
+    z-index: 45;
+    inset: auto 0 0 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 1px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-top: 1px solid rgb(var(--c-line-hard));
+    background: rgb(var(--c-line));
+  }
+
+  .dock-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 52px;
+    background: rgb(var(--c-surface));
+    font-family: "Courier Prime", monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: rgb(var(--c-fg-1));
+  }
+
+  .dock-btn svg { color: rgb(var(--c-brand-500)); }
+
+  .dock-btn--primary {
+    background: rgb(var(--c-brand-500));
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .dock-btn--primary svg { color: #fff; }
+
+  /* Sans cette reserve, la barre recouvre la fin du pied de page. */
+  body { padding-bottom: 52px; }
+}
+
+/* Sous 640 px la barre devient trop chargee : le bouton « contact » fait
+   double emploi avec la barre fixe du bas, on le retire. */
+@media (max-width: 639px) {
+  .nav-contact { display: none; }
+}
+
 /* --- Titres de section ------------------------------------------------------
    Le libellé « 01 — repères » est composé comme un intitulé de dossier :
    petites capitales espacées, suivies d'un filet qui court jusqu'au bord.  */

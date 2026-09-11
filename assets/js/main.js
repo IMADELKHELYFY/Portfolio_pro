@@ -188,6 +188,38 @@
     }
   }
 
+  /* --- Menu mobile ----------------------------------------------------------
+     Le panneau est replie par defaut ; il se referme des qu'on choisit une
+     destination, sinon il reste ouvert par-dessus la section visee.        */
+
+  const burger = document.getElementById("burger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (burger && mobileMenu) {
+    function setMenu(open) {
+      burger.setAttribute("aria-expanded", String(open));
+      mobileMenu.hidden = !open;
+    }
+
+    burger.addEventListener("click", function () {
+      setMenu(burger.getAttribute("aria-expanded") !== "true");
+    });
+
+    mobileMenu.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setMenu(false);
+    });
+
+    // Repasser en grand ecran laisse sinon un panneau ouvert mais masque,
+    // et le bouton dans un etat « ouvert » qui ne correspond a rien.
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", function (ev) {
+      if (ev.matches) setMenu(false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setMenu(false);
+    });
+  }
+
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 
