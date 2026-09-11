@@ -28,7 +28,6 @@ fr: {
   "a11y.menu": "Ouvrir le menu",
   "a11y.contact": "Contact",
   "dock.mail": "Email",
-  "dock.call": "Appeler",
   "ui.cv": "CV (PDF)",
   "ui.cvLong": "Télécharger le CV (PDF)",
 
@@ -254,7 +253,6 @@ en: {
   "a11y.menu": "Open menu",
   "a11y.contact": "Contact",
   "dock.mail": "Email",
-  "dock.call": "Call",
   "ui.cv": "Resume (PDF)",
   "ui.cvLong": "Download the resume (PDF)",
 
