@@ -230,7 +230,7 @@
   function syncCvLang() {
     const lang = window.PF && window.PF.lang === "fr" ? "FR" : "EN";
     autoCv.forEach((a) => {
-      a.setAttribute("href", "assets/cv/CV_Imad_EL_KHELYFY_" + lang + ".pdf");
+      a.setAttribute("href", "assets/cv/CV_Imad_EL_KHELYFY_" + lang + ".pdf?v=20260912c");
       a.setAttribute("hreflang", lang.toLowerCase());
     });
   }
