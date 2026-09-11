@@ -394,6 +394,37 @@ html.js .hero-rise.is-up { opacity: 1; transform: none; }
 .hc--in:hover,
 .hc--cv:hover { background: rgb(var(--c-brand-500) / 0.18); color: rgb(var(--c-brand-500)); }
 
+/* Le CV existe en deux langues : plutot qu'un bouton qui devine, deux
+   segments qui laissent choisir. Ils occupent toute la hauteur du bloc,
+   sinon la cible tombe sous les 44 px au pouce. */
+
+.hc--cv { padding-right: 0; cursor: default; }
+
+.cv-segs {
+  display: inline-flex;
+  align-self: stretch;
+  margin-left: 8px;
+  border-left: 1px solid rgb(var(--c-brand-500) / 0.7);
+}
+
+.cv-segs a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 13px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgb(var(--c-brand-400));
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cv-segs a + a { border-left: 1px solid rgb(var(--c-brand-500) / 0.45); }
+
+.cv-segs a:hover {
+  background: rgb(var(--c-brand-500));
+  color: rgb(var(--c-surface));
+}
+
 @media (max-width: 560px) {
   /* Sur telephone, mail, LinkedIn et le CV prennent toute la largeur : ce
      sont les trois actions reelles de la page, elles ne se partagent pas
@@ -402,6 +433,7 @@ html.js .hero-rise.is-up { opacity: 1; transform: none; }
   .hero-contact li:nth-child(-n+3) .hc { width: 100%; justify-content: center; }
   .hero-contact li:nth-child(n+4)  { flex: 1 1 0; }
   .hero-contact li:nth-child(n+4) .hc { width: 100%; justify-content: center; font-size: 11.5px; }
+  .hero-contact li:nth-child(3) .hc { justify-content: space-between; }
   .hero-contact li:nth-child(4) .hc span { display: none; }
   .hero-contact li:nth-child(4) .hc::after { content: "Tel"; }
 }

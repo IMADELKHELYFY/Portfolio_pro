@@ -220,6 +220,26 @@
     });
   }
 
+  /* --- CV de la barre fixe -------------------------------------------------
+     La couverture et la section contact laissent choisir entre les deux
+     langues ; la barre du bas n'a la place que d'une touche, elle sert donc
+     la version correspondant a la langue affichee.                        */
+
+  const autoCv = Array.from(document.querySelectorAll("[data-cv-auto]"));
+
+  function syncCvLang() {
+    const lang = window.PF && window.PF.lang === "fr" ? "FR" : "EN";
+    autoCv.forEach((a) => {
+      a.setAttribute("href", "assets/cv/CV_Imad_EL_KHELYFY_" + lang + ".pdf");
+      a.setAttribute("hreflang", lang.toLowerCase());
+    });
+  }
+
+  if (autoCv.length) {
+    syncCvLang();
+    document.addEventListener("pf:lang", syncCvLang);
+  }
+
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 
