@@ -29,6 +29,8 @@ fr: {
   "a11y.contact": "Contact",
   "dock.mail": "Email",
   "dock.call": "Appeler",
+  "ui.cv": "CV (PDF)",
+  "ui.cvLong": "Télécharger le CV (PDF)",
 
   "nav.parcours": "parcours",
   "nav.projets": "projets",
@@ -253,6 +255,8 @@ en: {
   "a11y.contact": "Contact",
   "dock.mail": "Email",
   "dock.call": "Call",
+  "ui.cv": "Resume (PDF)",
+  "ui.cvLong": "Download the resume (PDF)",
 
   "nav.parcours": "background",
   "nav.projets": "projects",

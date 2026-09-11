@@ -9,3 +9,6 @@ desktop.ini
 
 # divers
 *.log
+
+# outils locaux
+.claude/

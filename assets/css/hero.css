@@ -382,7 +382,8 @@ html.js .hero-rise.is-up { opacity: 1; transform: none; }
 /* Mail et LinkedIn sont les deux entrees qu'on veut voir en premier :
    elles portent l'accent, les deux autres restent en retrait. */
 .hc--mail,
-.hc--in {
+.hc--in,
+.hc--cv {
   border-color: rgb(var(--c-brand-500));
   background: rgb(var(--c-brand-500) / 0.1);
   color: rgb(var(--c-brand-400));
@@ -390,17 +391,19 @@ html.js .hero-rise.is-up { opacity: 1; transform: none; }
 }
 
 .hc--mail:hover,
-.hc--in:hover { background: rgb(var(--c-brand-500) / 0.18); color: rgb(var(--c-brand-500)); }
+.hc--in:hover,
+.hc--cv:hover { background: rgb(var(--c-brand-500) / 0.18); color: rgb(var(--c-brand-500)); }
 
 @media (max-width: 560px) {
-  /* Sur telephone, mail et LinkedIn prennent toute la largeur : ce sont les
-     deux actions reelles de la page, elles ne se partagent pas une ligne. */
-  .hero-contact li:nth-child(-n+2) { flex: 1 1 100%; }
-  .hero-contact li:nth-child(-n+2) .hc { width: 100%; justify-content: center; }
-  .hero-contact li:nth-child(n+3)  { flex: 1 1 0; }
-  .hero-contact li:nth-child(n+3) .hc { width: 100%; justify-content: center; font-size: 11.5px; }
-  .hero-contact li:nth-child(3) .hc span { display: none; }
-  .hero-contact li:nth-child(3) .hc::after { content: "Tel"; }
+  /* Sur telephone, mail, LinkedIn et le CV prennent toute la largeur : ce
+     sont les trois actions reelles de la page, elles ne se partagent pas
+     une ligne. Telephone et GitHub se contentent d'une demie chacun. */
+  .hero-contact li:nth-child(-n+3) { flex: 1 1 100%; }
+  .hero-contact li:nth-child(-n+3) .hc { width: 100%; justify-content: center; }
+  .hero-contact li:nth-child(n+4)  { flex: 1 1 0; }
+  .hero-contact li:nth-child(n+4) .hc { width: 100%; justify-content: center; font-size: 11.5px; }
+  .hero-contact li:nth-child(4) .hc span { display: none; }
+  .hero-contact li:nth-child(4) .hc::after { content: "Tel"; }
 }
 
 /* ══════════════ Adaptations ═════════════════════════════════════════════ */
@@ -418,7 +421,17 @@ html.js .hero-rise.is-up { opacity: 1; transform: none; }
   .hero-lead   { margin-top: 18px; font-size: 15px; line-height: 1.65; }
   .hero-chips  { margin-top: 20px; }
   .hero-actions { margin-top: 22px; }
-  .hero-actions .hero-btn { flex: 1 1 0; justify-content: center; min-height: 46px; }
+  .hero-actions .hero-btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 46px;
+    /* A 375 px, « see the projects » passait sur deux lignes tandis que le
+       bouton voisin en tenait une : deux blocs de hauteur egale mais de
+       composition differente. */
+    padding: 11px 12px;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

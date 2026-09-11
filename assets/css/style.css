@@ -118,7 +118,7 @@
     z-index: 45;
     inset: auto 0 0 0;
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.35fr 1.1fr 0.8fr 0.9fr;
     gap: 1px;
     padding-bottom: env(safe-area-inset-bottom, 0px);
     border-top: 1px solid rgb(var(--c-line-hard));
@@ -133,9 +133,15 @@
     min-height: 52px;
     background: rgb(var(--c-surface));
     font-family: "Courier Prime", monospace;
-    font-size: 12px;
-    letter-spacing: 0.05em;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
     color: rgb(var(--c-fg-1));
+  }
+
+  /* A quatre colonnes sur 375 px, les libelles ne tiennent plus a cote des
+     icones en dessous de 360 px : l'icone seule reste comprehensible. */
+  @media (max-width: 359px) {
+    .dock-btn span { display: none; }
   }
 
   .dock-btn svg { color: rgb(var(--c-brand-500)); }
