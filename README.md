@@ -32,7 +32,7 @@ assets/
   css/style.css             composants de la page
   css/cases.css             projets data du scrollytelling + lecteur d'étude
   js/i18n.js                dictionnaire FR / EN + préférences (langue, thème)
-  js/cases.js               LE CONTENU des 7 études de cas, bilingue
+  js/cases.js               LE CONTENU des 8 études de cas, bilingue
   js/case-view.js           rendu des étapes, du lecteur, de la lightbox
   js/main.js                progression, apparitions, scrollytelling
   img/logo.svg              la marque, utilisée aussi comme favicon
@@ -53,7 +53,7 @@ assets/
 | --- | --- | --- |
 | `#hero` | nom, accroche, boutons | `index.html` + `i18n.js` |
 | `#parcours` | expériences et formation | `index.html` + `i18n.js` |
-| `#projets` | **9 projets en scrollytelling** — les 7 projets data (générés) puis les 2 projets IA (en dur) | `cases.js` / `index.html` |
+| `#projets` | **10 projets en scrollytelling** — les 8 projets data (générés) puis les 2 projets IA (en dur) | `cases.js` / `index.html` |
 | `#stack` | fiche technique, certifications, langues | `index.html` + `i18n.js` |
 | `#contact` | mail, téléphone, LinkedIn, GitHub | `index.html` + `i18n.js` |
 
@@ -68,7 +68,7 @@ l'écran.
 
 Deux familles de projets cohabitent dans le même flux :
 
-* **les 7 projets data** — injectés par `case-view.js` dans
+* **les 8 projets data** — injectés par `case-view.js` dans
   `#case-steps` / `#case-visuals`. Leur visuel est une capture réelle de
   l'application et un bouton ouvre l'**étude complète** ;
 * **les 2 projets IA** — écrits en dur dans `index.html`, avec un schéma SVG

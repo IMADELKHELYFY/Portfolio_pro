@@ -21,7 +21,7 @@ window.I18N = {
 /* ═══════════════════════════════ FRANÇAIS ═══════════════════════════════ */
 fr: {
   "meta.title": "Imad EL KHELYFY — Data Analyst / Data Engineer",
-  "meta.desc": "Portfolio d'Imad EL KHELYFY : pipelines de données, machine learning et IA générative. Sept études de cas analytiques complètes, parcours et contact.",
+  "meta.desc": "Portfolio d'Imad EL KHELYFY : pipelines de données, machine learning et IA générative. Huit études de cas analytiques complètes, parcours et contact.",
 
   "a11y.lang": "Langue",
   "a11y.theme": "Changer de thème",
@@ -40,7 +40,7 @@ fr: {
   "nav.contact": "contact",
 
   "hero.eyebrow": "portfolio / data &amp; ia",
-  "hero.lead": "Je construis des systèmes data et IA de bout en bout : des pipelines qui tiennent, des modèles évalués honnêtement, des applications LLM qui survivent à la production. Sept études de cas, code compris.",
+  "hero.lead": "Je construis des systèmes data et IA de bout en bout : des pipelines qui tiennent, des modèles évalués honnêtement, des applications LLM qui survivent à la production. Huit études de cas, code compris.",
   "hero.chip3": "IA générative",
   "hero.cta1": "Voir les projets",
   "hero.cta2": "Me contacter",
@@ -81,7 +81,7 @@ fr: {
 
   "projets.label": "02 — projets",
   "projets.title": "Chaque projet part d'un problème réel, pas d'un jeu de données.",
-  "projets.hint": "Le visuel de droite suit le projet en cours de lecture. Les sept projets data s'ouvrent en étude complète : contexte, méthode, captures, recommandations.",
+  "projets.hint": "Le visuel de droite suit le projet en cours de lecture. Les huit projets data s'ouvrent en étude complète : contexte, méthode, captures, recommandations.",
 
   "step1.index": "projet 01",
   "step1.title": "GraphRAG vs Simple RAG",
@@ -91,11 +91,11 @@ fr: {
   "step2.title": "GuardianFlow — détection de blanchiment",
   "step2.body1": "Une chaîne complète de surveillance financière : ingestion des transactions, feature engineering, entraînement du modèle, puis restitution. Le modèle atteint <strong class=\"text-white\">92 % de précision</strong> sur la détection de comportements suspects.",
   "step2.body2": "L'intérêt du projet n'est pas le score : c'est la chaîne de bout en bout — API REST en Flask, stockage PostgreSQL, conteneurisation Docker, et un dashboard où un analyste peut réellement instruire une alerte.",
-  "step3.index": "projet 08",
+  "step3.index": "projet 09",
   "step3.title": "Intelligent Event Bot",
   "step3.body1": "Un pipeline événementiel orchestré avec n8n : détection d'un événement, génération du contenu marketing par IA, personnalisation, envoi. Le traitement manuel a chuté de <strong class=\"text-white\">60 %</strong>.",
   "step3.body2": "Architecture pilotée par les événements plutôt que par un planificateur : chaque étape est indépendante, rejouable, et observable — on sait toujours où un message s'est arrêté.",
-  "step4.index": "projet 09",
+  "step4.index": "projet 10",
   "step4.title": "EduChatbot — mentor IA",
   "step4.body1": "Une plateforme qui génère des parcours d'apprentissage en data science adaptés au niveau réel de la personne, avec un tuteur conversationnel disponible à chaque étape.",
   "step4.body2": "Intégration LLM de bout en bout : cadrage du prompt, structuration de la réponse en étapes exploitables, et interface Streamlit assez simple pour qu'un débutant s'en serve sans mode d'emploi.",
@@ -247,7 +247,7 @@ en: {
   "stackg6": "Microsoft suite",
   "stackg7": "DevOps &amp; method",
   "meta.title": "Imad EL KHELYFY — Data Analyst / Data Engineer",
-  "meta.desc": "Imad EL KHELYFY's portfolio: data pipelines, machine learning and generative AI. Seven complete analytics case studies, background and contact.",
+  "meta.desc": "Imad EL KHELYFY's portfolio: data pipelines, machine learning and generative AI. Eight complete analytics case studies, background and contact.",
 
   "a11y.lang": "Language",
   "a11y.theme": "Switch theme",
@@ -266,7 +266,7 @@ en: {
   "nav.contact": "contact",
 
   "hero.eyebrow": "portfolio / data &amp; ai",
-  "hero.lead": "I build data and AI systems end to end: ingestion pipelines that hold, models evaluated honestly, LLM applications that survive production. Seven case studies, code included.",
+  "hero.lead": "I build data and AI systems end to end: ingestion pipelines that hold, models evaluated honestly, LLM applications that survive production. Eight case studies, code included.",
   "hero.chip3": "Generative AI",
   "hero.cta1": "See the projects",
   "hero.cta2": "Get in touch",
@@ -307,7 +307,7 @@ en: {
 
   "projets.label": "02 — projects",
   "projets.title": "Every project starts from a real problem, not from a dataset.",
-  "projets.hint": "The visual on the right follows the project you are reading. The seven data projects open as full case studies: context, method, screenshots, recommendations.",
+  "projets.hint": "The visual on the right follows the project you are reading. The eight data projects open as full case studies: context, method, screenshots, recommendations.",
 
   "step1.index": "project 01",
   "step1.title": "GraphRAG vs Simple RAG",
@@ -317,11 +317,11 @@ en: {
   "step2.title": "GuardianFlow — money-laundering detection",
   "step2.body1": "A complete financial-surveillance chain: transaction ingestion, feature engineering, model training, then reporting. The model reaches <strong class=\"text-white\">92% precision</strong> on suspicious-behaviour detection.",
   "step2.body2": "The point of the project isn't the score — it's the end-to-end chain: a Flask REST API, PostgreSQL storage, Docker containerisation, and a dashboard where an analyst can actually work an alert.",
-  "step3.index": "project 08",
+  "step3.index": "project 09",
   "step3.title": "Intelligent Event Bot",
   "step3.body1": "An event-driven pipeline orchestrated with n8n: event detection, AI-generated marketing content, personalisation, delivery. Manual handling dropped by <strong class=\"text-white\">60%</strong>.",
   "step3.body2": "Event-driven rather than scheduler-driven: every step is independent, replayable and observable — you always know where a message stopped.",
-  "step4.index": "project 09",
+  "step4.index": "project 10",
   "step4.title": "EduChatbot — AI mentor",
   "step4.body1": "A platform that generates data-science learning paths matched to the learner's actual level, with a conversational tutor available at every step.",
   "step4.body2": "End-to-end LLM integration: prompt framing, structuring the answer into actionable steps, and a Streamlit interface simple enough for a beginner to use without a manual.",
